@@ -28,7 +28,7 @@
                 android:id="@+id/cart_et_games_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 games"
+                android:text="0 games"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -115,7 +115,7 @@
                         android:id="@+id/cart_tv_total_games"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1"
+                        android:text="0"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -152,10 +152,10 @@
                         app:layout_constraintTop_toBottomOf="@+id/view" />
 
                     <TextView
-                        android:id="@+id/textView9"
+                        android:id="@+id/cart_tv_sub_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$5.99"
+                        android:text="$0"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/textView8"
@@ -178,7 +178,7 @@
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$5.99"
+                        android:text="$0"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp"
                         android:textStyle="bold"
