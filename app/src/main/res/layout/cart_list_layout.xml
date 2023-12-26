@@ -44,6 +44,8 @@
             android:layout_marginStart="8dp"
             tools:text="Go on a journey as Kaze in this 90’s classics inspired platformer. When the Crystal Islands get cursed, Kaze needs to save her friend Hogo while facing enraged living vegetables. Find the Wild Masks to unleash the powers of the legendary guardians and master land, sky and sea."
             android:textSize="12sp"
+            android:ellipsize="end"
+            android:maxLines="7"
             app:layout_constraintBottom_toBottomOf="@+id/cart_iv_poster"
             app:layout_constraintEnd_toStartOf="@+id/cart_iv_trash"
             app:layout_constraintStart_toEndOf="@+id/cart_iv_poster"
