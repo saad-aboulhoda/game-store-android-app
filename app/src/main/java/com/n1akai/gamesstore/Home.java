@@ -42,7 +42,6 @@ public class Home extends AppCompatActivity {
         setupBottomNav();
         hideHomeHeaderInOtherFragments();
         navigateToSearchFrag();
-
     }
 
     private void setupNavController() {
