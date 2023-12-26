@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.n1akai.gamesstore.models.Cart;
 import com.n1akai.gamesstore.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -61,8 +62,9 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         public void bind(Cart cart) {
             title.setText(cart.getTitle());
             story.setText(cart.getStory());
-            price.setText("$"+cart.getPrice());
-            poster.setImageResource(cart.getImg());
+            String priceStr = "$"+cart.getPrice();
+            price.setText(priceStr);
+            Picasso.get().load(cart.getImg()).into(poster);
             amount.setText(""+cart.getAmount());
         }
     }
