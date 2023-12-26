@@ -24,12 +24,16 @@
 
         <TextView
             android:id="@+id/cart_tv_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Kaze and the Wild Masks"
+            tools:text="Kaze and the Wild Masks"
             android:textColor="@color/black"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/cart_iv_trash"
             app:layout_constraintStart_toEndOf="@+id/cart_iv_poster"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,7 +42,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
-            android:text="Go on a journey as Kaze in this 90’s classics inspired platformer. When the Crystal Islands get cursed, Kaze needs to save her friend Hogo while facing enraged living vegetables. Find the Wild Masks to unleash the powers of the legendary guardians and master land, sky and sea."
+            tools:text="Go on a journey as Kaze in this 90’s classics inspired platformer. When the Crystal Islands get cursed, Kaze needs to save her friend Hogo while facing enraged living vegetables. Find the Wild Masks to unleash the powers of the legendary guardians and master land, sky and sea."
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@+id/cart_iv_poster"
             app:layout_constraintEnd_toStartOf="@+id/cart_iv_trash"
@@ -58,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:gravity="center"
-            android:text="$19.99"
+            tools:text="$19.99"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/cart_et_amount"
@@ -74,7 +78,7 @@
             android:ems="2"
             android:gravity="center"
             android:inputType="number"
-            android:text="1"
+            tools:text="1"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/cart_iv_plus"
             app:layout_constraintTop_toBottomOf="@+id/cart_iv_poster" />
