@@ -34,7 +34,7 @@
     <fragment
         android:id="@+id/cartFragment"
         android:name="com.n1akai.gamesstore.frags.CartFragment"
-        android:label="Your cartItem"
+        android:label="Your Cart"
         tools:layout="@layout/fragment_cart" />
     <fragment
         android:id="@+id/searchFragment"
