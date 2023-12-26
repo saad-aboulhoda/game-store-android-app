@@ -86,6 +86,25 @@
                 app:layout_constraintTop_toTopOf="@+id/text_view_new_release_price"
                 app:strokeWidth="0dp" />
 
+            <Button
+                android:id="@+id/button_new_release_valid"
+                style="@style/Widget.App.Button.OutlinedButton.IconOnly"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="4dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:cornerRadius="15dp"
+                app:icon="@drawable/ic_check"
+                android:visibility="invisible"
+                app:iconSize="20dp"
+                app:iconTint="#fff"
+                app:layout_constraintBottom_toBottomOf="@+id/text_view_new_release_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_view_new_release_price"
+                app:strokeWidth="0dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
