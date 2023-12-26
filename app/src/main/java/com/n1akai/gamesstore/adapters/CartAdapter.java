@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.n1akai.gamesstore.models.Cart;
+import com.n1akai.gamesstore.models.CartItem;
 import com.n1akai.gamesstore.R;
 import com.squareup.picasso.Picasso;
 
@@ -18,10 +18,10 @@ import java.util.ArrayList;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
-    ArrayList<Cart> carts;
+    ArrayList<CartItem> cartItems;
 
-    public CartAdapter(ArrayList<Cart> carts) {
-        this.carts = carts;
+    public CartAdapter(ArrayList<CartItem> cartItems) {
+        this.cartItems = cartItems;
     }
 
     @NonNull
@@ -32,16 +32,16 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Cart cart = carts.get(position);
-        holder.bind(cart);
+        CartItem cartItem = cartItems.get(position);
+        holder.bind(cartItem);
     }
 
     @Override
     public int getItemCount() {
-        return carts.size();
+        return cartItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, story, price;
         ImageView poster, plus, minus, trash;
@@ -59,13 +59,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
             amount = itemView.findViewById(R.id.cart_et_amount);
         }
 
-        public void bind(Cart cart) {
-            title.setText(cart.getTitle());
-            story.setText(cart.getStory());
-            String priceStr = "$"+cart.getPrice();
+        public void bind(CartItem cartItem) {
+            title.setText(cartItem.getTitle());
+            story.setText(cartItem.getStory());
+            String priceStr = "$"+ cartItem.getPrice();
             price.setText(priceStr);
-            Picasso.get().load(cart.getImg()).into(poster);
-            amount.setText(""+cart.getAmount());
+            Picasso.get().load(cartItem.getImg()).into(poster);
+            amount.setText(""+ cartItem.getAmount());
         }
     }
 }
