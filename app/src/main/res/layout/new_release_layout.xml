@@ -83,6 +83,7 @@
                 app:iconTint="#fff"
                 app:layout_constraintBottom_toBottomOf="@+id/text_view_new_release_price"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_view_new_release_price"
                 app:strokeWidth="0dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
