@@ -13,14 +13,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.n1akai.gamesstore.adapters.DiscountAdapter;
 import com.n1akai.gamesstore.adapters.GenreAdapter;
 import com.n1akai.gamesstore.adapters.GameAdapter;
-import com.n1akai.gamesstore.adapters.OnItemClickListener;
+import com.n1akai.gamesstore.models.CartItem;
 import com.n1akai.gamesstore.models.Discount;
 import com.n1akai.gamesstore.models.Genre;
 import com.n1akai.gamesstore.models.Game;
@@ -54,7 +57,7 @@ public class HomeFragment extends Fragment {
     GameAdapter gameAdapter;
 
 
-    DatabaseReference genresDR, gamesDR;
+    DatabaseReference genresDR, gamesDR, cartDR, cartItemDR;
 
     HomeFragmentViewModel viewModel;
 
@@ -83,6 +86,7 @@ public class HomeFragment extends Fragment {
         navController = Navigation.findNavController(v);
         genresDR = FirebaseDatabase.getInstance().getReference("genres");
         gamesDR = FirebaseDatabase.getInstance().getReference("games");
+        cartDR = FirebaseDatabase.getInstance().getReference("carts");
         initView();
         //searchBar();
         sliderImage();
@@ -170,9 +174,39 @@ public class HomeFragment extends Fragment {
         gameAdapter.setOnGameClickListener(game -> {
             navigateToGameDetail(game);
         });
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        gameAdapter.setOnCartClickListener(game -> {
+            if (user != null) {
+                cartItemDR = cartDR.child(user.getUid()).child(game.getId());
+                addToCart(game);
+            } else {
+                Toast.makeText(getContext(), "You have to login first", Toast.LENGTH_SHORT).show();
+                navigateToUserLogin();
+            }
+        });
         newReleasesRV.setHasFixedSize(true);
         newReleasesRV.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         newReleasesRV.setAdapter(gameAdapter);
+    }
+
+    private void addToCart(Game game) {
+        cartItemDR.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                CartItem cartItem = task.getResult().getValue(CartItem.class);
+                if (cartItem != null)
+                    cartItem.setAmount(cartItem.getAmount() + 1);
+                else {
+                    cartItem = new CartItem(game.getId(), game.getTitle(), game.getDescription(), game.getPrice(), game.getPosterUrl());
+                }
+                cartItemDR.setValue(cartItem).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+                        Toast.makeText(getContext(), "Added Successfuly!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     private void gamesListener() {
@@ -220,6 +254,11 @@ public class HomeFragment extends Fragment {
 
     private void navigateToGameDetail(Game game) {
         NavDirections action = HomeFragmentDirections.actionHomeFragmentToGameDetailFragment(game, game.getTitle());
+        navController.navigate(action);
+    }
+
+    private void navigateToUserLogin() {
+        NavDirections action = HomeFragmentDirections.actionGlobalUserFragment();
         navController.navigate(action);
     }
 }
