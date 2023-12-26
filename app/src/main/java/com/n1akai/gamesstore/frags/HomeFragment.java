@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
@@ -175,10 +176,10 @@ public class HomeFragment extends Fragment {
             navigateToGameDetail(game);
         });
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        gameAdapter.setOnCartClickListener(game -> {
+        gameAdapter.setOnCartClickListener((game, cartBtn, checkBtn) -> {
             if (user != null) {
                 cartItemDR = cartDR.child(user.getUid()).child(game.getId());
-                addToCart(game);
+                addToCart(game, cartBtn, checkBtn);
             } else {
                 Toast.makeText(getContext(), "You have to login first", Toast.LENGTH_SHORT).show();
                 navigateToUserLogin();
@@ -189,17 +190,19 @@ public class HomeFragment extends Fragment {
         newReleasesRV.setAdapter(gameAdapter);
     }
 
-    private void addToCart(Game game) {
+    private void addToCart(Game game, Button cartBtn, Button checkBtn) {
         cartItemDR.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 CartItem cartItem = task.getResult().getValue(CartItem.class);
                 if (cartItem != null)
-                    cartItem.setAmount(cartItem.getAmount() + 1);
+                    cartItem.plus();
                 else {
                     cartItem = new CartItem(game.getId(), game.getTitle(), game.getDescription(), game.getPrice(), game.getPosterUrl());
                 }
                 cartItemDR.setValue(cartItem).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
+                        cartBtn.setVisibility(View.INVISIBLE);
+                        checkBtn.setVisibility(View.VISIBLE);
                         Toast.makeText(getContext(), "Added Successfuly!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();

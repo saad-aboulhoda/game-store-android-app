@@ -45,7 +45,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
             holder.itemView.setOnClickListener(v -> {
                 clickListener.onGameClick(game);
             });
-            holder.cartBtn.setOnClickListener(v -> cartClickListener.onCartClick(game));
+            holder.cartBtn.setOnClickListener(v -> cartClickListener.onCartClick(game, ((Button) v), holder.check));
             Picasso.get().load(game.getPosterUrl()).into(holder.img);
         }
 
@@ -69,7 +69,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
         TextView title, price;
         ImageView img;
-        Button cartBtn;
+        Button cartBtn, check;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,6 +77,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
             img = itemView.findViewById(R.id.image_view_new_release_img);
             price = itemView.findViewById(R.id.text_view_new_release_price);
             cartBtn = itemView.findViewById(R.id.button_new_release_cart);
+            check = itemView.findViewById(R.id.button_new_release_valid);
         }
     }
 }

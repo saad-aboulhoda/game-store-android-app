@@ -49,4 +49,14 @@ public class CartItem {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    public void plus() {
+        amount++;
+    }
+
+    public void minus() {
+        if (amount > 1) {
+            amount--;
+        }
+    }
 }

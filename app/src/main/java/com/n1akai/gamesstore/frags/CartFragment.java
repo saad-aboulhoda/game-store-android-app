@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,13 +35,18 @@ import java.util.ArrayList;
 public class CartFragment extends Fragment {
 
     View v;
-    TextView counts, totalGames, subTotal;
+    TextView counts, totalGames, subTotal, totalP, subTotalLabel;
+    EditText couponEt;
+    Button couponConfirmBtn;
     ArrayList<CartItem> cartItems;
     FirebaseUser user;
     DatabaseReference mRef;
     NavController navController;
     int allGamesCount = 0;
     Double subTotalPrice = 0.0;
+    final static int PLUS_NUMBER = 0;
+    final static int MINUS_NUMBER = 1;
+    Double theDiscount = 0.0;
 
     public CartFragment() {
         // Required empty public constructor
@@ -63,6 +70,7 @@ public class CartFragment extends Fragment {
             mRef = FirebaseDatabase.getInstance().getReference("carts").child(user.getUid());
             cartList();
             initView();
+            setupCoupon();
         } else {
             Toast.makeText(getContext(), "You have to login first", Toast.LENGTH_SHORT).show();
             navigateToUserLogin();
@@ -73,6 +81,26 @@ public class CartFragment extends Fragment {
         counts = v.findViewById(R.id.cart_et_games_count);
         totalGames = v.findViewById(R.id.cart_tv_total_games);
         subTotal = v.findViewById(R.id.cart_tv_sub_total);
+        totalP = v.findViewById(R.id.cart_tv_total);
+        couponEt = v.findViewById(R.id.edit_text_coupon);
+        couponConfirmBtn = v.findViewById(R.id.button_confirm);
+        subTotalLabel = v.findViewById(R.id.cart_tv_sub_total_label);
+    }
+
+    private void setupCoupon() {
+        couponConfirmBtn.setOnClickListener(v -> {
+            if (couponEt.getText().toString().equalsIgnoreCase("NAKAMA2024")) {
+                theDiscount = 0.2;
+                manageTotalPrice();
+                String perc = theDiscount*100+"%";
+                subTotalLabel.setText("Subtotal\nDiscount");
+                String subTotalPriceFormated = String.format("%.2f", subTotalPrice);
+                subTotal.setText(subTotalPriceFormated+"\n"+perc);
+                Toast.makeText(getContext(), "Coupon is valid", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Coupon is not valid", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void cartList() {
@@ -84,11 +112,13 @@ public class CartFragment extends Fragment {
         mRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                cartItems.clear();
+                allGamesCount = 0;
+                subTotalPrice = 0.0;
                 for (DataSnapshot s: snapshot.getChildren()) {
                     CartItem cartItem = s.getValue(CartItem.class);
                     cartItems.add(cartItem);
                     manageCount(cartItem);
-                    manageSubTotalPrice(cartItem);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -97,18 +127,62 @@ public class CartFragment extends Fragment {
 
             }
         });
+        adapter.onTrashClickListener(id -> mRef.child(id).removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(getContext(), "Deleted Successfuly!", Toast.LENGTH_SHORT).show();
+                if (cartItems.size() < 1) {
+                    cartItems.clear();
+                    counts.setText("0 games");
+                    totalGames.setText("0 games");
+                    subTotal.setText("$0");
+                    totalP.setText("$0");
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }));
+        adapter.onPlusListener(id -> plusOrMinus(id, CartFragment.PLUS_NUMBER));
+        adapter.onMinusListener(id -> plusOrMinus(id, CartFragment.MINUS_NUMBER));
     }
+
+    private void plusOrMinus(String id, int n) {
+        DatabaseReference theRef = mRef.child(id);
+        theRef.get().addOnCompleteListener(s -> {
+            CartItem item = s.getResult().getValue(CartItem.class);
+            if (item != null) {
+                if (n == CartFragment.PLUS_NUMBER) {
+                    item.plus();
+                } else {
+                    item.minus();
+                }
+                theRef.setValue(item);
+            }
+        });
+    }
+
 
     private void manageCount(CartItem cartItem) {
         allGamesCount += cartItem.getAmount();
         counts.setText(allGamesCount+" games");
         totalGames.setText(allGamesCount+" games");
+        manageSubTotalPrice(cartItem);
     }
 
     private void manageSubTotalPrice(CartItem cartItem) {
-        subTotalPrice += Double.parseDouble(cartItem.getPrice());
+        subTotalPrice += Double.parseDouble(cartItem.getPrice())*cartItem.getAmount();
         String subTotalPriceFormated = String.format("%.2f", subTotalPrice);
-        subTotal.setText("$"+subTotalPriceFormated);
+        String perc = "";
+        if (theDiscount > 0) {
+            perc = "\n"+theDiscount*100+"%";
+        }
+        subTotal.setText("$"+subTotalPriceFormated+perc);
+
+        manageTotalPrice();
+    }
+
+    private void manageTotalPrice() {
+        Double totalPrice = subTotalPrice * (1-theDiscount);
+        String totalPriceFormated = String.format("%.2f", totalPrice);
+        totalP.setText("$"+totalPriceFormated);
     }
 
     private void navigateToUserLogin() {
