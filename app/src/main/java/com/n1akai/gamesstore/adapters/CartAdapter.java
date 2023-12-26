@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
 
     ArrayList<CartItem> cartItems;
+    OnTrashClickListener trashClickListener;
 
     public CartAdapter(ArrayList<CartItem> cartItems) {
         this.cartItems = cartItems;
@@ -33,7 +34,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartItem cartItem = cartItems.get(position);
+        holder.trash.setOnClickListener(v -> trashClickListener.onTrashClick(cartItem.getId()));
         holder.bind(cartItem);
+    }
+
+    public void onTrashClickListener(OnTrashClickListener trashClickListener) {
+        this.trashClickListener = trashClickListener;
     }
 
     @Override
