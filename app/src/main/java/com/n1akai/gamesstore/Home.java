@@ -50,7 +50,7 @@ public class Home extends AppCompatActivity {
 
     private void setupNavController() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        navController = navHostFragment.getNavController();
+        navController = navHostFragment != null ? navHostFragment.getNavController() : null;
     }
 
     private void searchBar() {
