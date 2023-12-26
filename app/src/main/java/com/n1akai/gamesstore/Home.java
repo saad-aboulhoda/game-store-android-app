@@ -57,9 +57,7 @@ public class Home extends AppCompatActivity {
     }
 
     private void searchBar() {
-        searchBarEt.setOnClickListener(v -> {
-            startActivity(new Intent(this, Search.class));
-        });
+        searchBarEt.setOnClickListener(v -> startActivity(new Intent(this, Search.class)));
     }
 
     private void setupToolbar() {
@@ -71,33 +69,27 @@ public class Home extends AppCompatActivity {
     }
 
     private void hideHomeHeaderInOtherFragments() {
-        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
-            @Override
-            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                if (navDestination.getId() == R.id.homeFragment) {
-                    homeHeader.setVisibility(View.VISIBLE);
-                    toolbar.setVisibility(View.GONE);
-                } else if (navDestination.getId() == R.id.searchFragment) {
-                    homeHeader.setVisibility(View.GONE);
-                    toolbar.setVisibility(View.VISIBLE);
-                    toolbar.findViewById(R.id.edit_text_main_search).setVisibility(View.VISIBLE);
-                } else {
-                    homeHeader.setVisibility(View.GONE);
-                    toolbar.setVisibility(View.VISIBLE);
-                    toolbar.findViewById(R.id.edit_text_main_search).setVisibility(View.GONE);
-                }
+        navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+            if (navDestination.getId() == R.id.homeFragment) {
+                homeHeader.setVisibility(View.VISIBLE);
+                toolbar.setVisibility(View.GONE);
+            } else if (navDestination.getId() == R.id.searchFragment) {
+                homeHeader.setVisibility(View.GONE);
+                toolbar.setVisibility(View.VISIBLE);
+                toolbar.findViewById(R.id.edit_text_main_search).setVisibility(View.VISIBLE);
+            } else {
+                homeHeader.setVisibility(View.GONE);
+                toolbar.setVisibility(View.VISIBLE);
+                toolbar.findViewById(R.id.edit_text_main_search).setVisibility(View.GONE);
             }
         });
     }
 
     private void navigateToSearchFrag() {
-        searchBarEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    NavDirections action = NavGraphDirections.actionGlobalSearchFragment();
-                    navController.navigate(action);
-                }
+        searchBarEt.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                NavDirections action = NavGraphDirections.actionGlobalSearchFragment();
+                navController.navigate(action);
             }
         });
     }
