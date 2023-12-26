@@ -22,6 +22,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
     LinkedHashMap<String, Game> latestGames;
     OnItemClickListener clickListener;
+    OnCartClickListener cartClickListener;
 
     public GameAdapter(LinkedHashMap<String, Game> latestGames) {
         this.latestGames = latestGames;
@@ -35,14 +36,19 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        List keys = new ArrayList(latestGames.keySet());
+        List<String> keys = new ArrayList<>(latestGames.keySet());
         Game game = latestGames.get(keys.get(position));
-        holder.title.setText(game.getTitle());
-        holder.price.setText("$"+game.getPrice());
-        holder.itemView.setOnClickListener(v -> {
-            clickListener.onGameClick(game);
-        });
-        Picasso.get().load(game.getPosterUrl()).into(holder.img);
+        if (game != null) {
+            holder.title.setText(game.getTitle());
+            String price = "$"+game.getPrice();
+            holder.price.setText(price);
+            holder.itemView.setOnClickListener(v -> {
+                clickListener.onGameClick(game);
+            });
+            holder.cartBtn.setOnClickListener(v -> cartClickListener.onCartClick(game));
+            Picasso.get().load(game.getPosterUrl()).into(holder.img);
+        }
+
     }
 
     @Override
@@ -54,8 +60,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         this.clickListener = clickListener;
     }
 
+    public void setOnCartClickListener(OnCartClickListener cartClickListener) {
+        this.cartClickListener = cartClickListener;
+    }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title, price;
         ImageView img;
