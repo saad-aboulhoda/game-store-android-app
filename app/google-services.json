@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1000377537495",
+    "firebase_url": "https://games-store-734f3-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "games-store-734f3",
+    "storage_bucket": "games-store-734f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000377537495:android:65f2efdca4d3f9f715f192",
+        "android_client_info": {
+          "package_name": "com.n1akai.gamesstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000377537495-o7gfbr9fgc6qlq7m4dt7lrmegapinqq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAbyz9K1JgETMcxnvAyKaGak2fQ3y0JhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000377537495-o7gfbr9fgc6qlq7m4dt7lrmegapinqq1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

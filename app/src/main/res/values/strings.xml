@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">Games Store</string>
+    <string name="search_bar_hint">Search for a game...</string>
+    <string name="action_genre">Action</string>
+    <string name="rpg_genre">RPG</string>
+    <string name="sports_genre">Sports</string>
+    <string name="adventure_genre">Adventure</string>
+    <string name="genres">Genres</string>
+    <string name="featured_discounts">Featured Discounts</string>
+    <string name="new_releases">New Releases</string>
+    <string name="create_your_acount">Create your account now</string>
+    <string name="update_your_personal_information">Update your personal information</string>
+    <string name="update">Update</string>
+    <string name="signup">Sign up</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email">E-mail</string>
+    <string name="country">Country</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="all_fields_are_required">All fields are required</string>
+    <string name="first_name_and_last_name">First name and last name are required</string>
+    <string name="email_is_invalid">Email is invalid</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+    <string name="more_than_7">Password has to be more than 7 characters</string>
+    <string name="success">Success!</string>
+    <string name="use_another_email">This email is already in use, use another email!</string>
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="already_have_an_account">Already have an account? <font color="#F64B4B">Login</font></string>
+    <string name="or">or</string>
+    <string name="login_with_google">Login with Google</string>
+    <string name="base_game">Base Game</string>
+    <string name="buy_now">Buy now</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="developer">Developer</string>
+    <string name="publisher">Publisher</string>
+    <string name="release_date">Release Date</string>
+    <string name="description">Description</string>
+    <string name="platform">Platform</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
