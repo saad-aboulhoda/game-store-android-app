@@ -80,7 +80,7 @@
 
             <Button
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:id="@+id/appCompatButton2"
+                android:id="@+id/detail_button_add_to_cart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="12dp"
@@ -100,7 +100,7 @@
                 android:stretchColumns="0"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatButton2">
+                app:layout_constraintTop_toBottomOf="@+id/detail_button_add_to_cart">
 
                 <TableRow
                     android:layout_width="match_parent"
