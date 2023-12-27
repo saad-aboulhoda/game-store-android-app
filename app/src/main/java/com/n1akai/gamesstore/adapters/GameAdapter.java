@@ -22,7 +22,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
 
     LinkedHashMap<String, Game> latestGames;
     OnItemClickListener clickListener;
-    OnCartClickListener cartClickListener;
+    OnCartBtnClickListener cartClickListener;
 
     public GameAdapter(LinkedHashMap<String, Game> latestGames) {
         this.latestGames = latestGames;
@@ -60,7 +60,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
         this.clickListener = clickListener;
     }
 
-    public void setOnCartClickListener(OnCartClickListener cartClickListener) {
+    public void setOnCartClickListener(OnCartBtnClickListener cartClickListener) {
         this.cartClickListener = cartClickListener;
     }
 

@@ -22,6 +22,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
     OnTrashClickListener trashClickListener;
     OnPlusListener onPlus;
     OnMinusListener onMinus;
+    OnCartClickListener listener;
 
     public CartAdapter(ArrayList<CartItem> cartItems) {
         this.cartItems = cartItems;
@@ -39,7 +40,12 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.ViewHolder> {
         holder.trash.setOnClickListener(v -> trashClickListener.onTrashClick(cartItem.getId()));
         holder.plus.setOnClickListener(v -> onPlus.onPlus(cartItem.getId()));
         holder.minus.setOnClickListener(v -> onMinus.onMinus(cartItem.getId()));
+        holder.itemView.setOnClickListener(v -> listener.onCartClick(cartItem.getId()));
         holder.bind(cartItem);
+    }
+
+    public void onCartClickListener(OnCartClickListener listener) {
+        this.listener = listener;
     }
 
     public void onTrashClickListener(OnTrashClickListener trashClickListener) {

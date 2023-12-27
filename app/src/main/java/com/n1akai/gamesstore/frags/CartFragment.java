@@ -19,6 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.n1akai.gamesstore.adapters.CartAdapter;
 import com.n1akai.gamesstore.models.CartItem;
 import com.n1akai.gamesstore.R;
+import com.n1akai.gamesstore.models.Game;
 
 import java.util.ArrayList;
 
@@ -140,8 +143,21 @@ public class CartFragment extends Fragment {
                 }
             }
         }));
+        adapter.onCartClickListener(this::goToGameDetail);
         adapter.onPlusListener(id -> plusOrMinus(id, CartFragment.PLUS_NUMBER));
         adapter.onMinusListener(id -> plusOrMinus(id, CartFragment.MINUS_NUMBER));
+    }
+
+    private void goToGameDetail(String gameId) {
+        DatabaseReference gamesRef = FirebaseDatabase.getInstance().getReference("games").child(gameId);
+        gamesRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Game game = task.getResult().getValue(Game.class);
+                navigateToGameDetail(game);
+            } else {
+                Toast.makeText(getContext(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void plusOrMinus(String id, int n) {
@@ -183,6 +199,11 @@ public class CartFragment extends Fragment {
         Double totalPrice = subTotalPrice * (1-theDiscount);
         String totalPriceFormated = String.format("%.2f", totalPrice);
         totalP.setText("$"+totalPriceFormated);
+    }
+
+    private void navigateToGameDetail(Game game) {
+        NavDirections action = CartFragmentDirections.actionCartFragmentToGameDetailFragment(game, game.getTitle());
+        navController.navigate(action);
     }
 
     private void navigateToUserLogin() {
