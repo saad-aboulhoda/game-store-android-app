@@ -48,7 +48,7 @@ public class UserFragment extends Fragment {
     FirebaseAuth mAuth;
     FirebaseUser user;
     DatabaseReference mRef;
-    Button logoutBtn, editProfileImgBtn, updateUserBtn;
+    Button logoutBtn, editProfileImgBtn, updateUserBtn, myOrdersBtn;
     TextView fullNameTv;
     CircularProgressIndicator progressIndicator;
     ScrollView scrollView;
@@ -97,6 +97,7 @@ public class UserFragment extends Fragment {
         logoutListener();
         updateUserBtnListener();
         profileImageListener();
+        myOrdersBtnClickListener();
     }
 
     private void initView() {
@@ -109,6 +110,7 @@ public class UserFragment extends Fragment {
         avatar = v.findViewById(R.id.shapeableImageView);
         uploadProgress = v.findViewById(R.id.image_uploading_progress);
         overlay = v.findViewById(R.id.image_uploading_overlay);
+        myOrdersBtn = v.findViewById(R.id.user_my_orders);
     }
 
     private void initDbRef(String userUID) {
@@ -181,12 +183,22 @@ public class UserFragment extends Fragment {
                 });
     }
 
+    private void myOrdersBtnClickListener() {
+        myOrdersBtn.setOnClickListener(v -> {
+            navigateToOrders();
+        });
+    }
+
     private void navigateToLogin() {
         navController.navigate(UserFragmentDirections.actionUserFragmentToLoginFragment());
     }
 
     private void navigateToUpdateUser() {
         navController.navigate(UserFragmentDirections.actionUserFragmentToUpdateUserFragment(theUser));
+    }
+
+    private void navigateToOrders() {
+        navController.navigate(UserFragmentDirections.actionUserFragmentToOrdersFragment());
     }
 
     private void getUserInfo() {

@@ -21,8 +21,10 @@ import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -52,7 +54,7 @@ public class HomeFragment extends Fragment {
     RecyclerView genresRV, discountsRV, newReleasesRV;
     NavController navController;
     LinkedHashMap<String, Genre> genres;
-    GenreAdapter adapter;
+    GenreAdapter genreAdapter;
     ChildEventListener gamesListener, genresListener;
     LinkedHashMap<String, Game> latestGames;
     GameAdapter gameAdapter;
@@ -110,51 +112,16 @@ public class HomeFragment extends Fragment {
     }
 
     private void genres() {
-        genres = new LinkedHashMap<>();
-        genresListener();
-        adapter = new GenreAdapter(genres);
+        FirebaseRecyclerOptions<Genre> options = new FirebaseRecyclerOptions.Builder<Genre>()
+                .setSnapshotArray(viewModel.genres)
+                .build();
+
+        genreAdapter = new GenreAdapter(options);
         genresRV.setHasFixedSize(true);
         genresRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-        genresRV.setAdapter(adapter);
+        genresRV.setAdapter(genreAdapter);
     }
 
-    private void genresListener() {
-        genresListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Genre genre = snapshot.getValue(Genre.class);
-                genres.put(genre.getId(), genre);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Genre genre = snapshot.getValue(Genre.class);
-                genres.put(genre.getId(), genre);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                genres.remove(snapshot.getValue(Genre.class).getId());
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        genresDR.addChildEventListener(genresListener);
-
-
-    }
 
     private void discounts() {
         ArrayList<Discount> discounts = new ArrayList<>();
@@ -169,12 +136,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void latestGames() {
-        latestGames = new LinkedHashMap<>();
-        gamesListener();
-        gameAdapter = new GameAdapter(latestGames);
-        gameAdapter.setOnGameClickListener(game -> {
-            navigateToGameDetail(game);
-        });
+        FirebaseRecyclerOptions<Game> options = new FirebaseRecyclerOptions.Builder<Game>()
+                .setSnapshotArray(viewModel.games)
+                .build();
+        gameAdapter = new GameAdapter(options);
+        gameAdapter.setOnGameClickListener(this::navigateToGameDetail);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         gameAdapter.setOnCartClickListener((game, cartBtn, checkBtn) -> {
             if (user != null) {
@@ -212,48 +178,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void gamesListener() {
-        gamesListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Game game = snapshot.getValue(Game.class);
-                latestGames.put(game.getId(), game);
-                gameAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Game game = snapshot.getValue(Game.class);
-                latestGames.put(game.getId(), game);
-                gameAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                latestGames.remove(snapshot.getValue(Game.class).getId());
-                gameAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        gamesDR.addChildEventListener(gamesListener);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        gamesDR.removeEventListener(gamesListener);
-        genresDR.removeEventListener(genresListener);
-    }
 
     private void navigateToGameDetail(Game game) {
         NavDirections action = HomeFragmentDirections.actionHomeFragmentToGameDetailFragment(game, game.getTitle());
@@ -264,4 +188,19 @@ public class HomeFragment extends Fragment {
         NavDirections action = HomeFragmentDirections.actionGlobalUserFragment();
         navController.navigate(action);
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        gameAdapter.startListening();
+        genreAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        gameAdapter.stopListening();
+        genreAdapter.stopListening();
+    }
+
 }

@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.n1akai.gamesstore.models.Game;
 import com.n1akai.gamesstore.R;
 import com.squareup.picasso.Picasso;
@@ -18,15 +21,16 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
+public class GameAdapter extends FirebaseRecyclerAdapter<Game, GameAdapter.ViewHolder> {
 
-    LinkedHashMap<String, Game> latestGames;
     OnItemClickListener clickListener;
     OnCartBtnClickListener cartClickListener;
 
-    public GameAdapter(LinkedHashMap<String, Game> latestGames) {
-        this.latestGames = latestGames;
+
+    public GameAdapter(@NonNull FirebaseRecyclerOptions<Game> options) {
+        super(options);
     }
+
 
     @NonNull
     @Override
@@ -35,25 +39,15 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        List<String> keys = new ArrayList<>(latestGames.keySet());
-        Game game = latestGames.get(keys.get(position));
-        if (game != null) {
-            holder.title.setText(game.getTitle());
-            String price = "$"+game.getPrice();
-            holder.price.setText(price);
-            holder.itemView.setOnClickListener(v -> {
-                clickListener.onGameClick(game);
-            });
-            holder.cartBtn.setOnClickListener(v -> cartClickListener.onCartClick(game, ((Button) v), holder.check));
-            Picasso.get().load(game.getPosterUrl()).into(holder.img);
-        }
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return latestGames.size();
+    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Game game) {
+        holder.title.setText(game.getTitle());
+        String price = "$"+game.getPrice();
+        holder.price.setText(price);
+        holder.itemView.setOnClickListener(v -> {
+            clickListener.onGameClick(game);
+        });
+        holder.cartBtn.setOnClickListener(v -> cartClickListener.onCartClick(game, ((Button) v), holder.check));
+        Picasso.get().load(game.getPosterUrl()).into(holder.img);
     }
 
     public void setOnGameClickListener(OnItemClickListener clickListener) {

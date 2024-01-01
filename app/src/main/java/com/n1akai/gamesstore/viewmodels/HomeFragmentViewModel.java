@@ -1,29 +1,66 @@
 package com.n1akai.gamesstore.viewmodels;
 
-import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModel;
 
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
-import com.google.firebase.database.ChildEventListener;
+import com.firebase.ui.common.ChangeEventType;
+import com.firebase.ui.database.ChangeEventListener;
+import com.firebase.ui.database.ClassSnapshotParser;
+import com.firebase.ui.database.FirebaseArray;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import com.n1akai.gamesstore.R;
 import com.n1akai.gamesstore.adapters.GenreAdapter;
+import com.n1akai.gamesstore.models.Game;
 import com.n1akai.gamesstore.models.Genre;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 public class HomeFragmentViewModel extends ViewModel {
     ArrayList<SlideModel> slideImgs;
-    LinkedHashMap<String, Genre> genres;
-    GenreAdapter adapter;
-    public View v = null;
+    public FirebaseArray<Game> games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").limitToLast(6), new ClassSnapshotParser<>(Game.class));
+    public FirebaseArray<Genre> genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
+    KeppAliveListener keppAliveListener;
+
+    public HomeFragmentViewModel() {
+        keppAliveListener = new KeppAliveListener();
+        games.addChangeEventListener(keppAliveListener);
+        genres.addChangeEventListener(keppAliveListener);
+    }
+
+    static class KeppAliveListener implements ChangeEventListener {
+
+        @Override
+        public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
+
+        }
+
+        @Override
+        public void onDataChanged() {
+            Log.d("MYTAG", "HELLO WORLD!");
+        }
+
+        @Override
+        public void onError(@NonNull DatabaseError databaseError) {
+
+        }
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        games.removeChangeEventListener(keppAliveListener);
+        genres.removeChangeEventListener(keppAliveListener);
+    }
 
     public void sliderImage() {
         slideImgs = new ArrayList<>();
@@ -32,14 +69,6 @@ public class HomeFragmentViewModel extends ViewModel {
         slideImgs.add(new SlideModel(R.drawable.new_slide_img_3, ScaleTypes.CENTER_CROP));
         slideImgs.add(new SlideModel(R.drawable.new_slide_img_4, ScaleTypes.CENTER_CROP));
     }
-
-    private void genres() {
-        genres = new LinkedHashMap<>();
-//        genresListener();
-        adapter = new GenreAdapter(genres);
-    }
-
-
 
 
     public ArrayList<SlideModel> getSlideImgs() {

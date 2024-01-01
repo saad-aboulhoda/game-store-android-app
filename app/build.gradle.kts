@@ -55,6 +55,8 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    // FirebaseUI for Firebase Realtime Database
+    implementation ("com.firebaseui:firebase-ui-database:8.0.2")
     implementation("com.google.firebase:firebase-auth")
 
     implementation("com.google.firebase:firebase-storage")
@@ -63,4 +65,7 @@ dependencies {
 
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
+
+    // Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
 }

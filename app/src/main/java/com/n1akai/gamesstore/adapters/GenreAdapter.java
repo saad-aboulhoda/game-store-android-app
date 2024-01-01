@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.n1akai.gamesstore.models.Genre;
 import com.n1akai.gamesstore.R;
 import com.squareup.picasso.Picasso;
@@ -18,12 +20,11 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
-public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> {
+public class GenreAdapter extends FirebaseRecyclerAdapter<Genre, GenreAdapter.ViewHolder> {
 
-    LinkedHashMap<String, Genre> genres;
 
-    public GenreAdapter(LinkedHashMap<String, Genre> genres) {
-        this.genres = genres;
+    public GenreAdapter(@NonNull FirebaseRecyclerOptions<Genre> options) {
+        super(options);
     }
 
     @NonNull
@@ -33,19 +34,12 @@ public class GenreAdapter extends RecyclerView.Adapter<GenreAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ArrayList list = new ArrayList(genres.keySet());
-        Genre genre = genres.get(list.get(position));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, Genre genre) {
         holder.title.setText(genre.getTitle());
         Picasso.get().load(genre.getImgUrl()).into(holder.img);
     }
 
-    @Override
-    public int getItemCount() {
-        return genres.size();
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;
         ImageView img;

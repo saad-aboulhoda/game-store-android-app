@@ -35,7 +35,6 @@ public class Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initView();
-        searchBar();
         setSupportActionBar(toolbar);
         setupNavController();
         setupToolbar();
@@ -49,9 +48,6 @@ public class Home extends AppCompatActivity {
         navController = navHostFragment != null ? navHostFragment.getNavController() : null;
     }
 
-    private void searchBar() {
-        searchBarEt.setOnClickListener(v -> startActivity(new Intent(this, Search.class)));
-    }
 
     private void setupToolbar() {
         NavigationUI.setupWithNavController(toolbar, navController);

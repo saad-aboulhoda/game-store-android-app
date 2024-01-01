@@ -40,7 +40,7 @@ public class CartFragment extends Fragment {
     View v;
     TextView counts, totalGames, subTotal, totalP, subTotalLabel;
     EditText couponEt;
-    Button couponConfirmBtn;
+    Button couponConfirmBtn, checkoutBtn;
     ArrayList<CartItem> cartItems;
     FirebaseUser user;
     DatabaseReference mRef;
@@ -49,7 +49,7 @@ public class CartFragment extends Fragment {
     Double subTotalPrice = 0.0;
     final static int PLUS_NUMBER = 0;
     final static int MINUS_NUMBER = 1;
-    Double theDiscount = 0.0;
+    Double theDiscount = 0.0, totalPrice;
 
     public CartFragment() {
         // Required empty public constructor
@@ -74,6 +74,7 @@ public class CartFragment extends Fragment {
             cartList();
             initView();
             setupCoupon();
+            checkoutBtnClickListener();
         } else {
             Toast.makeText(getContext(), "You have to login first", Toast.LENGTH_SHORT).show();
             navigateToUserLogin();
@@ -88,6 +89,7 @@ public class CartFragment extends Fragment {
         couponEt = v.findViewById(R.id.edit_text_coupon);
         couponConfirmBtn = v.findViewById(R.id.button_confirm);
         subTotalLabel = v.findViewById(R.id.cart_tv_sub_total_label);
+        checkoutBtn = v.findViewById(R.id.button_checkout);
     }
 
     private void setupCoupon() {
@@ -98,7 +100,7 @@ public class CartFragment extends Fragment {
                 String perc = theDiscount*100+"%";
                 subTotalLabel.setText("Subtotal\nDiscount");
                 String subTotalPriceFormated = String.format("%.2f", subTotalPrice);
-                subTotal.setText(subTotalPriceFormated+"\n"+perc);
+                subTotal.setText("$"+subTotalPriceFormated+"\n"+perc);
                 Toast.makeText(getContext(), "Coupon is valid", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getContext(), "Coupon is not valid", Toast.LENGTH_SHORT).show();
@@ -196,9 +198,15 @@ public class CartFragment extends Fragment {
     }
 
     private void manageTotalPrice() {
-        Double totalPrice = subTotalPrice * (1-theDiscount);
+        totalPrice = subTotalPrice * (1-theDiscount);
         String totalPriceFormated = String.format("%.2f", totalPrice);
         totalP.setText("$"+totalPriceFormated);
+    }
+
+    private void checkoutBtnClickListener() {
+        checkoutBtn.setOnClickListener(v -> {
+            navigateToCheckOut();
+        });
     }
 
     private void navigateToGameDetail(Game game) {
@@ -208,6 +216,11 @@ public class CartFragment extends Fragment {
 
     private void navigateToUserLogin() {
         NavDirections action = CartFragmentDirections.actionGlobalUserFragment();
+        navController.navigate(action);
+    }
+
+    private void navigateToCheckOut() {
+        NavDirections action = CartFragmentDirections.actionCartFragmentToCheckoutFragment(totalPrice.toString(), cartItems);
         navController.navigate(action);
     }
 

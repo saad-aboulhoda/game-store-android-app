@@ -58,7 +58,7 @@ public class SigninWithEmailAndPassFragment extends Fragment {
         emailEt = v.findViewById(R.id.signup_et_email);
         passwordEt = v.findViewById(R.id.signup_et_password);
         progressIndicator = v.findViewById(R.id.circularProgressIndicator);
-        signinBtn = v.findViewById(R.id.update_button);
+        signinBtn = v.findViewById(R.id.pay_button);
     }
 
     private void signupBtnListener() {

@@ -73,7 +73,7 @@ public class SigninFragment extends Fragment {
     }
 
     private void navigateToRegister() {
-        Button continueBtn = view.findViewById(R.id.update_button);
+        Button continueBtn = view.findViewById(R.id.pay_button);
         TextInputEditText emailEt = view.findViewById(R.id.login_et_email);
         continueBtn.setOnClickListener(v -> {
             NavDirections action = SigninFragmentDirections.actionLoginFragmentToRegisterFragment(emailEt.getText().toString());

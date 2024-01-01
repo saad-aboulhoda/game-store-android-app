@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_cartFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -85,6 +88,9 @@
         <action
             android:id="@+id/action_userFragment_to_updateUserFragment"
             app:destination="@id/updateUserFragment" />
+        <action
+            android:id="@+id/action_userFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_userFragment"
@@ -100,4 +106,24 @@
             android:name="user"
             app:argType="com.n1akai.gamesstore.models.User" />
     </fragment>
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.n1akai.gamesstore.frags.CheckoutFragment"
+        android:label="Checkout"
+        tools:layout="@layout/fragment_checkout">
+        <argument
+            android:name="totalPrice"
+            app:argType="string" />
+        <argument
+            android:name="cartList"
+            app:argType="java.util.ArrayList" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_ordersFragment"
+            app:destination="@id/ordersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="com.n1akai.gamesstore.frags.OrdersFragment"
+        android:label="My Orders"
+        tools:layout="@layout/fragment_orders" />
 </navigation>

@@ -58,7 +58,7 @@
             android:layout_marginTop="4dp"
             android:hint="@string/email"
             app:endIconMode="clear_text"
-            app:layout_constraintBottom_toTopOf="@+id/update_button"
+            app:layout_constraintBottom_toTopOf="@+id/pay_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
 
 
         <Button
-            android:id="@+id/update_button"
+            android:id="@+id/pay_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -98,7 +98,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/update_button" />
+            app:layout_constraintTop_toBottomOf="@+id/pay_button" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
