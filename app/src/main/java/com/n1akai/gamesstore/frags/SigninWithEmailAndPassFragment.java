@@ -18,13 +18,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.n1akai.gamesstore.R;
 
+import java.util.regex.Pattern;
+
 public class SigninWithEmailAndPassFragment extends Fragment {
 
     View v;
+    String email, password;
     TextInputEditText emailEt, passwordEt;
     CircularProgressIndicator progressIndicator;
     Button signinBtn;
@@ -61,23 +65,48 @@ public class SigninWithEmailAndPassFragment extends Fragment {
         signinBtn = v.findViewById(R.id.pay_button);
     }
 
+    private boolean validateInputs() {
+        email = emailEt.getText().toString().trim();
+        password = passwordEt.getText().toString().trim();
+        TextInputLayout emailLayout = v.findViewById(R.id.signup_til_email);
+        TextInputLayout passwordLayout = v.findViewById(R.id.signup_til_password);
+        String error = getResources().getString(R.string.this_field_is_required);
+        if (email.isEmpty()) {
+            emailLayout.setError(error);
+            return false;
+        } else {
+            emailLayout.setError(null);
+        }
+        if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", email)) {
+            emailLayout.setError(getResources().getString(R.string.email_is_invalid));
+            return false;
+        } else {
+            emailLayout.setError(null);
+        }
+        if (password.isEmpty()) {
+            passwordLayout.setError(error);
+            return false;
+        } else {
+            passwordLayout.setError(null);
+        }
+        return true;
+    }
+
     private void signupBtnListener() {
         signinBtn.setOnClickListener(v -> {
+            if (!validateInputs()) return;
             inputEnabled(false);
-            String email = emailEt.getText().toString();
-            String password = passwordEt.getText().toString();
+            email = emailEt.getText().toString();
+            password = passwordEt.getText().toString();
             progressIndicator.setVisibility(View.VISIBLE);
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    inputEnabled(true);
-                    progressIndicator.setVisibility(View.INVISIBLE);
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-                        navigateToUserFrag();
-                    } else {
-                        Toast.makeText(getContext(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
-                    }
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                inputEnabled(true);
+                progressIndicator.setVisibility(View.INVISIBLE);
+                if (task.isSuccessful()) {
+                    Toast.makeText(getContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                    navigateToUserFrag();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -86,6 +115,7 @@ public class SigninWithEmailAndPassFragment extends Fragment {
     private void inputEnabled(boolean b) {
         emailEt.setEnabled(b);
         passwordEt.setEnabled(b);
+        signinBtn.setEnabled(b);
     }
 
     private void navigateToUserFrag() {

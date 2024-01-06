@@ -2,11 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
     <color name="colorPrimary">#F64B4B</color>
+    <color name="colorPrimaryVariant">#ec5551</color>
+    <color name="colorSecondary">#F64B4B</color>
+
     <color name="colorPrimaryDark">#c43c3c</color>
+
     <color name="colorDanger">#F12727</color>
     <color name="genreTextBg">#99FFFFFF</color>
     <color name="lightGray">#1A000000</color>
     <color name="blue">#0074e4</color>
     <color name="black_50a">#80000000</color>
+    <color name="toolbarTextColor">#ffffff</color>
 </resources>

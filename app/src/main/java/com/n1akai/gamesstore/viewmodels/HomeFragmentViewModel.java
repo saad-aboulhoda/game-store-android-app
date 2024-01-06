@@ -27,7 +27,7 @@ import java.util.Objects;
 
 public class HomeFragmentViewModel extends ViewModel {
     ArrayList<SlideModel> slideImgs;
-    public FirebaseArray<Game> games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").limitToLast(6), new ClassSnapshotParser<>(Game.class));
+    public FirebaseArray<Game> games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").orderByChild("releaseDate").limitToLast(6), new ClassSnapshotParser<>(Game.class));
     public FirebaseArray<Genre> genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
     KeppAliveListener keppAliveListener;
 

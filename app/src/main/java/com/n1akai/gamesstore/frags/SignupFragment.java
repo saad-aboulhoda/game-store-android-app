@@ -8,18 +8,16 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
@@ -81,24 +79,60 @@ public class SignupFragment extends Fragment {
         email = emailEt.getText().toString().trim();
         password = passwordEt.getText().toString().trim();
         confirmPassword = confirmPasswordEt.getText().toString().trim();
+        TextInputLayout firstNameLayout = v.findViewById(R.id.register_til_first_name);
+        TextInputLayout lastNameLayout = v.findViewById(R.id.register_til_last_name);
+        TextInputLayout emailLayout = v.findViewById(R.id.signup_til_email);
+        TextInputLayout passwordLayout = v.findViewById(R.id.signup_til_password);
         TextInputLayout confirmPasswordLayout = v.findViewById(R.id.register_til_confirm_password);
-        if (fName.isEmpty() || lName.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.all_fields_are_required), Toast.LENGTH_SHORT).show();
+        String error = getResources().getString(R.string.this_field_is_required);
+        if (fName.isEmpty()) {
+            firstNameLayout.setError(error);
             return false;
+        } else {
+            firstNameLayout.setError(null);
         }
-        if (Pattern.compile("^(.+)@(\\\\S+)$").matcher(email).matches()) {
-            Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.email_is_invalid), Toast.LENGTH_SHORT).show();
+        if(lName.isEmpty()) {
+            lastNameLayout.setError(error);
             return false;
+        } else  {
+            lastNameLayout.setError(null);
+        }
+        if (email.isEmpty()) {
+            emailLayout.setError(error);
+            return false;
+        } else {
+            emailLayout.setError(null);
+        }
+        if (!Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", email)) {
+            emailLayout.setError(getResources().getString(R.string.email_is_invalid));
+            return false;
+        } else {
+            emailLayout.setError(null);
+        }
+        if (password.isEmpty()) {
+            passwordLayout.setError(error);
+            return false;
+        } else {
+            passwordLayout.setError(null);
+        }
+        if (password.length() < 8) {
+            passwordLayout.setError(getResources().getString(R.string.more_than_7));
+            return false;
+        } else {
+            passwordLayout.setError(null);
+        }
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordLayout.setError(error);
+            return false;
+        } else {
+            confirmPasswordLayout.setError(null);
         }
         if (!password.equals(confirmPassword)) {
             confirmPasswordLayout.setError(getResources().getString(R.string.passwords_dont_match));
             return false;
+        } else {
+            confirmPasswordLayout.setError(null);
         }
-        if (password.length() < 8) {
-            confirmPasswordLayout.setError(getResources().getString(R.string.more_than_7));
-            return false;
-        }
-        confirmPasswordLayout.setError(null);
         return true;
     }
 
@@ -108,26 +142,23 @@ public class SignupFragment extends Fragment {
             inputEnabled(false);
             progressIndicator.setVisibility(View.VISIBLE);
             mAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            inputEnabled(true);
-                            progressIndicator.setVisibility(View.INVISIBLE);
-                            if (task.isSuccessful()) {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                mRef.child(user.getUid()).setValue(new User(fName, lName, email));
-                                Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
-                                navigateToUser();
-                            } else {
-                                try {
-                                    throw task.getException();
-                                } catch (FirebaseAuthUserCollisionException e) {
-                                    Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.use_another_email), Toast.LENGTH_SHORT).show();
-                                } catch (Exception e) {
-                                    Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.something_went_wrong) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-
+                    .addOnCompleteListener(task -> {
+                        inputEnabled(true);
+                        progressIndicator.setVisibility(View.INVISIBLE);
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            mRef.child(user.getUid()).setValue(new User(fName, lName, email));
+                            Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
+                            navigateToUser();
+                        } else {
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthUserCollisionException e) {
+                                Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.use_another_email), Toast.LENGTH_SHORT).show();
+                            } catch (Exception e) {
+                                Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.something_went_wrong) + " " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
+
                         }
                     });
         });
@@ -139,6 +170,7 @@ public class SignupFragment extends Fragment {
         emailEt.setEnabled(b);
         passwordEt.setEnabled(b);
         confirmPasswordEt.setEnabled(b);
+        signInBtn.setEnabled(b);
     }
 
     private void navigateToUser() {

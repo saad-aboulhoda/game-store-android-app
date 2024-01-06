@@ -14,7 +14,7 @@
         android:icon="@drawable/ic_person"
         android:title="User" />
     <item
-        android:id="@+id/menu_tab"
-        android:icon="@drawable/ic_tab"
-        android:title="Tab" />
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_magnify"
+        android:title="Search" />
 </menu>

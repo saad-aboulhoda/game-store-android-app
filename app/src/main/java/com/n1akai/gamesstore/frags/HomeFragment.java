@@ -53,10 +53,7 @@ public class HomeFragment extends Fragment {
     ArrayList<SlideModel> slideImgs;
     RecyclerView genresRV, discountsRV, newReleasesRV;
     NavController navController;
-    LinkedHashMap<String, Genre> genres;
     GenreAdapter genreAdapter;
-    ChildEventListener gamesListener, genresListener;
-    LinkedHashMap<String, Game> latestGames;
     GameAdapter gameAdapter;
 
 
@@ -152,7 +149,9 @@ public class HomeFragment extends Fragment {
             }
         });
         newReleasesRV.setHasFixedSize(true);
-        newReleasesRV.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        layoutManager.setReverseLayout(true);
+        newReleasesRV.setLayoutManager(layoutManager);
         newReleasesRV.setAdapter(gameAdapter);
     }
 
