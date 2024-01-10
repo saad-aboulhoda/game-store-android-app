@@ -126,4 +126,8 @@
         android:name="com.n1akai.gamesstore.frags.OrdersFragment"
         android:label="My Orders"
         tools:layout="@layout/fragment_orders" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.n1akai.gamesstore.frags.SettingsFragment"
+        android:label="@string/settings" />
 </navigation>

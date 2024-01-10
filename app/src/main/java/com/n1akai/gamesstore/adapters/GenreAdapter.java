@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.n1akai.gamesstore.models.Genre;
@@ -36,7 +38,14 @@ public class GenreAdapter extends FirebaseRecyclerAdapter<Genre, GenreAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position, Genre genre) {
         holder.title.setText(genre.getTitle());
-        Picasso.get().load(genre.getImgUrl()).into(holder.img);
+        CircularProgressDrawable cpd = new CircularProgressDrawable(holder.itemView.getContext());
+        cpd.setStrokeWidth(5f);
+        cpd.setCenterRadius(30f);
+        cpd.start();
+        Glide.with(holder.itemView)
+                .load(genre.getImgUrl())
+                .placeholder(cpd)
+                .into(holder.img);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

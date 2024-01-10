@@ -1,6 +1,7 @@
 package com.n1akai.gamesstore;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -9,8 +10,14 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.preference.PreferenceManager;
+import androidx.preference.SwitchPreferenceCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +28,8 @@ import android.widget.EditText;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.Locale;
+
 public class Home extends AppCompatActivity {
 
     EditText searchBarEt;
@@ -30,6 +39,7 @@ public class Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navView;
     AppBarConfiguration appBarConfiguration;
+    SharedPreferences sp;
 
     private void initView() {
         searchBarEt = findViewById(R.id.edit_text_search);
@@ -49,7 +59,10 @@ public class Home extends AppCompatActivity {
         setupToolbar();
         setupBottomNav();
         setupNavigationDrawer();
+
     }
+
+
 
     private void setupNavController() {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
@@ -70,5 +83,7 @@ public class Home extends AppCompatActivity {
     private void setupNavigationDrawer() {
         NavigationUI.setupWithNavController(navView, navController);
     }
+
+
 
 }

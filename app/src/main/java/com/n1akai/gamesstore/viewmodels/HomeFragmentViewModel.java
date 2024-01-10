@@ -1,10 +1,13 @@
 package com.n1akai.gamesstore.viewmodels;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.denzcoskun.imageslider.constants.ScaleTypes;
@@ -29,37 +32,61 @@ public class HomeFragmentViewModel extends ViewModel {
     ArrayList<SlideModel> slideImgs;
     public FirebaseArray<Game> games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").orderByChild("releaseDate").limitToLast(6), new ClassSnapshotParser<>(Game.class));
     public FirebaseArray<Genre> genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
-    KeppAliveListener keppAliveListener;
+
+    private MutableLiveData<Boolean> finishedLoadingGenres = new MutableLiveData<>();
+    private MutableLiveData<Boolean> finishedLoadingNewReleases = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> getFinishedLoadingGenres() {
+        return finishedLoadingGenres;
+    }
+
+    public MutableLiveData<Boolean> getFinishedLoadingNewReleases() {
+        return finishedLoadingNewReleases;
+    }
 
     public HomeFragmentViewModel() {
-        keppAliveListener = new KeppAliveListener();
-        games.addChangeEventListener(keppAliveListener);
-        genres.addChangeEventListener(keppAliveListener);
+        games.addChangeEventListener(new ChangeEventListener() {
+            @Override
+            public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
+
+            }
+
+            @Override
+            public void onDataChanged() {
+                new Handler().postDelayed(() -> {
+                    finishedLoadingNewReleases.setValue(true);
+                }, 500);
+            }
+
+            @Override
+            public void onError(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        genres.addChangeEventListener(new ChangeEventListener() {
+            @Override
+            public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
+
+            }
+
+            @Override
+            public void onDataChanged() {
+                new Handler().postDelayed(() -> {
+                    finishedLoadingGenres.setValue(true);
+                }, 500);
+            }
+
+            @Override
+            public void onError(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
-    static class KeppAliveListener implements ChangeEventListener {
-
-        @Override
-        public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
-
-        }
-
-        @Override
-        public void onDataChanged() {
-            Log.d("MYTAG", "HELLO WORLD!");
-        }
-
-        @Override
-        public void onError(@NonNull DatabaseError databaseError) {
-
-        }
-    }
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        games.removeChangeEventListener(keppAliveListener);
-        genres.removeChangeEventListener(keppAliveListener);
     }
 
     public void sliderImage() {

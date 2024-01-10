@@ -14,7 +14,7 @@
         android:icon="@drawable/ic_person"
         android:title="User" />
     <item
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_magnify"
-        android:title="Search" />
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_cog"
+        android:title="Settings" />
 </menu>

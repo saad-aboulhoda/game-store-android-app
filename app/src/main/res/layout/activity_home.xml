@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:background="#F1F1F1">
+        android:background="@color/main_background">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -26,7 +26,8 @@
                 style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimary">
+                android:background="@color/toolbar_bg"
+                app:titleTextColor="@color/toolbarTextColor">
 
                 <EditText
                     android:id="@+id/edit_text_main_search"

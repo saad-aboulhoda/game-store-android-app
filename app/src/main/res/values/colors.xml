@@ -2,6 +2,16 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="main_background">#F1F1F1</color>
+    <color name="toolbar_bg">#F64B4B</color>
+
+    <!-- Discount Layout -->
+    <color name="discount_title_color">#FFF</color>
+    <color name="discount_price_color">#FFF</color>
+
+    <!-- Splash Screen Gradiant -->
+    <color name="splash_screen_start_color">#FA6060</color>
+    <color name="splash_screen_end_color">#F64B4B</color>
 
     <color name="colorPrimary">#F64B4B</color>
     <color name="colorPrimaryVariant">#ec5551</color>

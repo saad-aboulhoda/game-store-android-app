@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDirections;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment {
     ImageSlider imageSlider;
     ArrayList<SlideModel> slideImgs;
     RecyclerView genresRV, discountsRV, newReleasesRV;
+    ShimmerFrameLayout shimmerGenre, shimmerNewReleases;
     NavController navController;
     GenreAdapter genreAdapter;
     GameAdapter gameAdapter;
@@ -93,6 +96,22 @@ public class HomeFragment extends Fragment {
         genres();
         discounts();
         latestGames();
+
+        viewModel.getFinishedLoadingGenres().observe(requireActivity(), b -> {
+            if (b) {
+                shimmerGenre.stopShimmer();
+                shimmerGenre.setVisibility(View.GONE);
+                genresRV.setVisibility(View.VISIBLE);
+            }
+        });
+
+        viewModel.getFinishedLoadingNewReleases().observe(requireActivity(), b -> {
+            if (b) {
+                shimmerNewReleases.stopShimmer();
+                shimmerNewReleases.setVisibility(View.GONE);
+                newReleasesRV.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void initView() {
@@ -100,6 +119,8 @@ public class HomeFragment extends Fragment {
         genresRV = v.findViewById(R.id.recycler_view_genres);
         discountsRV = v.findViewById(R.id.recycler_view_discounts);
         newReleasesRV = v.findViewById(R.id.recycler_view_new_releases);
+        shimmerGenre = v.findViewById(R.id.genre_shimmer);
+        shimmerNewReleases = v.findViewById(R.id.new_releases_shimmer);
     }
 
     public void sliderImage() {

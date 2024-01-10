@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation("com.google.firebase:firebase-database:20.3.0")
+    implementation("androidx.preference:preference:1.2.0")
     val nav_version = "2.7.5"
 
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -66,6 +67,12 @@ dependencies {
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version")
 
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+
     // Glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Facebook Shimmer
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

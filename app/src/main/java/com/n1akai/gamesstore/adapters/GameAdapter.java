@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.n1akai.gamesstore.models.Game;
@@ -40,14 +42,11 @@ public class GameAdapter extends FirebaseRecyclerAdapter<Game, GameAdapter.ViewH
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Game game) {
-        holder.title.setText(game.getTitle());
-        String price = "$"+game.getPrice();
-        holder.price.setText(price);
+        holder.bind(game);
         holder.itemView.setOnClickListener(v -> {
             clickListener.onGameClick(game);
         });
         holder.cartBtn.setOnClickListener(v -> cartClickListener.onCartClick(game, ((Button) v), holder.check));
-        Picasso.get().load(game.getPosterUrl()).into(holder.img);
     }
 
     public void setOnGameClickListener(OnItemClickListener clickListener) {
@@ -72,6 +71,19 @@ public class GameAdapter extends FirebaseRecyclerAdapter<Game, GameAdapter.ViewH
             price = itemView.findViewById(R.id.text_view_new_release_price);
             cartBtn = itemView.findViewById(R.id.button_new_release_cart);
             check = itemView.findViewById(R.id.button_new_release_valid);
+        }
+
+        public void bind(Game game) {
+            title.setText(game.getTitle());
+            String price = "$"+game.getPrice();
+            this.price.setText(price);
+            CircularProgressDrawable cpd = new CircularProgressDrawable(itemView.getContext());
+            cpd.setStrokeWidth(5f);
+            cpd.setCenterRadius(30f);
+            cpd.start();
+            Picasso.get().load(game.getPosterUrl())
+                    .placeholder(cpd)
+                    .into(img);
         }
     }
 }

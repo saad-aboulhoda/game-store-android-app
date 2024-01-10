@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Games Store</string>
+
+    <string name="cart">عربة التسوق</string>
+    <string name="settings">الإعدادات</string>
+    <string name="required">مطلوب</string>
+
+    <string name="search_bar_hint">ابحث عن لعبة...</string>
+    <string name="action_genre">أكشن</string>
+    <string name="rpg_genre">ألعاب تقمص الأدوار</string>
+    <string name="sports_genre">رياضة</string>
+    <string name="adventure_genre">مغامرة</string>
+    <string name="genres">أنواع</string>
+    <string name="featured_discounts">عروض مميزة</string>
+    <string name="new_releases">إصدارات جديدة</string>
+    <string name="create_your_acount">أنشئ حسابك الآن</string>
+    <string name="update_your_personal_information">حدث معلوماتك الشخصية</string>
+    <string name="update">تحديث</string>
+    <string name="signup">التسجيل</string>
+    <string name="first_name">الاسم الأول</string>
+    <string name="last_name">الاسم الأخير</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="country">البلد</string>
+    <string name="password">كلمة المرور</string>
+    <string name="confirm_password">تأكيد كلمة المرور</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="this_field_is_required">هذا الحقل مطلوب</string>
+    <string name="first_name_and_last_name">الاسم الأول والاسم الأخير مطلوبان</string>
+    <string name="email_is_invalid">البريد الإلكتروني غير صالح</string>
+    <string name="passwords_dont_match">كلمات المرور غير متطابقة</string>
+    <string name="more_than_7">يجب أن تكون كلمة المرور أكثر من 7 أحرف</string>
+    <string name="success">نجاح!</string>
+    <string name="use_another_email">هذا البريد الإلكتروني مستخدم بالفعل، استخدم بريدًا آخر!</string>
+    <string name="something_went_wrong">حدث خطأ ما!</string>
+    <string name="already_have_an_account">لديك بالفعل حساب؟ <font color="#F64B4B">تسجيل الدخول</font></string>
+    <string name="or">أو</string>
+    <string name="login_with_google">تسجيل الدخول باستخدام جوجل</string>
+    <string name="base_game">اللعبة الأساسية</string>
+    <string name="buy_now">اشتري الآن</string>
+    <string name="add_to_cart">أضف إلى العربة</string>
+    <string name="developer">المطور</string>
+    <string name="publisher">الناشر</string>
+    <string name="release_date">تاريخ الإصدار</string>
+    <string name="description">الوصف</string>
+    <string name="platform">المنصة</string>
+
+    <string name="hello_blank_fragment">مرحبًا بك في الشاشة الفارغة</string>
+    <!-- Preference Titles -->
+    <string name="languages_header">اللغات</string>
+    <string name="theme_header">السمة</string>
+
+    <!-- Messages Preferences -->
+    <string name="language_title">اللغة</string>
+
+    <!-- Sync Preferences -->
+    <string name="theme_title">سمة داكنة</string>
+</resources>
