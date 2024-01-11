@@ -138,6 +138,7 @@ public class HomeFragment extends Fragment {
         genresRV.setHasFixedSize(true);
         genresRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         genresRV.setAdapter(genreAdapter);
+        genreAdapter.setOnGenreClickListener(this::navigateToGenreGames);
     }
 
 
@@ -206,6 +207,11 @@ public class HomeFragment extends Fragment {
 
     private void navigateToUserLogin() {
         NavDirections action = HomeFragmentDirections.actionGlobalUserFragment();
+        navController.navigate(action);
+    }
+
+    private void navigateToGenreGames(Genre genre) {
+        NavDirections action = HomeFragmentDirections.actionHomeFragmentToGenreGamesFragment(genre.getTitle(), genre);
         navController.navigate(action);
     }
 

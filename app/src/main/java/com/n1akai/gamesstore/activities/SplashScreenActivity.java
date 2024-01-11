@@ -1,4 +1,4 @@
-package com.n1akai.gamesstore;
+package com.n1akai.gamesstore.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -23,7 +23,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         checkLanguage();
         isDarkModeEnabled();
-        startActivity(new Intent(this, Home.class));
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 

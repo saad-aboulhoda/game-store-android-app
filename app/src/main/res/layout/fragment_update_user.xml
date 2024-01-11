@@ -35,7 +35,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
                 app:shapeAppearanceOverlay="@style/CornerSize50"
-                app:strokeColor="@color/white"
+                app:strokeColor="@color/text_color_secondary"
                 app:strokeWidth="4dp" />
 
             <Button
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/update_your_personal_information"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color_primary"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/register_til_first_name"
                 app:layout_constraintEnd_toEndOf="parent"

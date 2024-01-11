@@ -8,27 +8,36 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.n1akai.gamesstore.R;
 import com.n1akai.gamesstore.models.Game;
+import com.n1akai.gamesstore.models.Genre;
 import com.squareup.picasso.Picasso;
 
-public class FilterAdapter extends FirebaseRecyclerAdapter<Game, FilterAdapter.ViewHolder> {
-    /**
-     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-     * {@link FirebaseRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    public FilterAdapter(@NonNull FirebaseRecyclerOptions<Game> options) {
-        super(options);
+import java.util.List;
+
+public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder> {
+
+    List<Game> games;
+    OnItemClickListener listener;
+
+    public FilterAdapter(List<Game> games) {
+        this.games = games;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Game model) {
-        holder.bindView(model);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Game game = games.get(position);
+        holder.bindView(game);
+        holder.itemView.setOnClickListener(v -> listener.onGameClick(game));
+    }
+
+    @Override
+    public int getItemCount() {
+        return games.size();
     }
 
     @NonNull
@@ -37,8 +46,12 @@ public class FilterAdapter extends FirebaseRecyclerAdapter<Game, FilterAdapter.V
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.filter_layout, parent, false));
     }
 
+    public void setOnClickGameListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, genres;
+        TextView title, genres, price;
         ImageView poster, platforms;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -46,14 +59,25 @@ public class FilterAdapter extends FirebaseRecyclerAdapter<Game, FilterAdapter.V
             title = itemView.findViewById(R.id.tv_title);
             genres = itemView.findViewById(R.id.tv_genres);
             platforms = itemView.findViewById(R.id.iv_platforms);
+            price = itemView.findViewById(R.id.tv_price);
         }
 
         public void bindView(Game game) {
-            Picasso.get().load(game.getPosterUrl()).into(poster);
+            CircularProgressDrawable cpd = new CircularProgressDrawable(itemView.getContext());
+            cpd.setStrokeWidth(5f);
+            cpd.setCenterRadius(30f);
+            cpd.start();
+            Picasso.get().load(game.getPosterUrl()).placeholder(cpd).into(poster);
             title.setText(game.getTitle());
             if (game.getPlatforms().toLowerCase().contains("windows")) {
                 platforms.setImageResource(R.drawable.ic_windows);
             }
+            StringBuilder fullText = new StringBuilder();
+            for (Genre genre : game.getGenres()) {
+                fullText.append(genre.getTitle()).append(", ");
+            }
+            genres.setText(fullText.substring(0, fullText.length()-2));
+            price.setText("$"+game.getPrice());
         }
     }
 }

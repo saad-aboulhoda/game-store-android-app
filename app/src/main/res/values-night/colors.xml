@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#e0e0e0</color>
-    <color name="white">#000</color>
+    <color name="text_color_primary">#e0e0e0</color>
+    <color name="text_color_secondary">#000</color>
     <color name="main_background">#121212</color>
     <color name="toolbar_bg">#1f1f1f</color>
 

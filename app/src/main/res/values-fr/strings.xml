@@ -44,6 +44,9 @@
     <string name="release_date">Date de sortie</string>
     <string name="description">Description</string>
     <string name="platform">Plateforme</string>
+    <string name="game_images">Les photos du jeux</string>
+    <string name="similar_games">Jeux similaires</string>
+    <string name="zero_game_found">0 jeu trouvé</string>
 
     <string name="hello_blank_fragment">Bonjour fragment vide</string>
     <!-- Preference Titles -->

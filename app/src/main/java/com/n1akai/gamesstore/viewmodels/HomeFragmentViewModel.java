@@ -30,8 +30,8 @@ import java.util.Objects;
 
 public class HomeFragmentViewModel extends ViewModel {
     ArrayList<SlideModel> slideImgs;
-    public FirebaseArray<Game> games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").orderByChild("releaseDate").limitToLast(6), new ClassSnapshotParser<>(Game.class));
-    public FirebaseArray<Genre> genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
+    public FirebaseArray<Game> games;
+    public FirebaseArray<Genre> genres;
 
     private MutableLiveData<Boolean> finishedLoadingGenres = new MutableLiveData<>();
     private MutableLiveData<Boolean> finishedLoadingNewReleases = new MutableLiveData<>();
@@ -45,6 +45,8 @@ public class HomeFragmentViewModel extends ViewModel {
     }
 
     public HomeFragmentViewModel() {
+        games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").orderByChild("releaseDate").limitToLast(6), new ClassSnapshotParser<>(Game.class));
+        genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
         games.addChangeEventListener(new ChangeEventListener() {
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
@@ -87,6 +89,8 @@ public class HomeFragmentViewModel extends ViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
+        games = null;
+        genres = null;
     }
 
     public void sliderImage() {

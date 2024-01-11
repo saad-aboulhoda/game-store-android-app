@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ref: -NmrRLM9_Zr-ey6MoZ9f"
-            android:textColor="@color/black"
+            android:textColor="@color/text_color_primary"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

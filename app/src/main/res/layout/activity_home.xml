@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home">
+    tools:context=".activities.HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                     android:hint="@string/search_bar_hint"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text_color_primary"
                     android:textSize="15sp"
                     android:visibility="gone"
                     app:iconifiedByDefault="true" />

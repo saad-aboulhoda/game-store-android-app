@@ -1,36 +1,26 @@
-package com.n1akai.gamesstore;
+package com.n1akai.gamesstore.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.preference.PreferenceManager;
-import androidx.preference.SwitchPreferenceCompat;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.n1akai.gamesstore.R;
 
-import java.util.Locale;
-
-public class Home extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     EditText searchBarEt;
     Toolbar toolbar;
@@ -39,7 +29,6 @@ public class Home extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navView;
     AppBarConfiguration appBarConfiguration;
-    SharedPreferences sp;
 
     private void initView() {
         searchBarEt = findViewById(R.id.edit_text_search);
@@ -59,7 +48,7 @@ public class Home extends AppCompatActivity {
         setupToolbar();
         setupBottomNav();
         setupNavigationDrawer();
-
+        hideBottomNavOnGameDetail();
     }
 
 
@@ -82,6 +71,16 @@ public class Home extends AppCompatActivity {
 
     private void setupNavigationDrawer() {
         NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    private void hideBottomNavOnGameDetail() {
+        navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
+            if(navDestination.getId() == R.id.gameDetailFragment) {
+                bottomNavigationView.setVisibility(View.GONE);
+            } else {
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
 

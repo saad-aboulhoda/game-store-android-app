@@ -25,6 +25,8 @@ import java.util.Set;
 public class GenreAdapter extends FirebaseRecyclerAdapter<Genre, GenreAdapter.ViewHolder> {
 
 
+    OnGenreClickListener listener;
+
     public GenreAdapter(@NonNull FirebaseRecyclerOptions<Genre> options) {
         super(options);
     }
@@ -33,6 +35,10 @@ public class GenreAdapter extends FirebaseRecyclerAdapter<Genre, GenreAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_layout, parent, false));
+    }
+
+    public void setOnGenreClickListener(OnGenreClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -46,6 +52,7 @@ public class GenreAdapter extends FirebaseRecyclerAdapter<Genre, GenreAdapter.Vi
                 .load(genre.getImgUrl())
                 .placeholder(cpd)
                 .into(holder.img);
+        holder.itemView.setOnClickListener(v -> listener.onGenreClick(genre));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,5 +65,9 @@ public class GenreAdapter extends FirebaseRecyclerAdapter<Genre, GenreAdapter.Vi
             title = itemView.findViewById(R.id.genre_title);
             img = itemView.findViewById(R.id.genre_img);
         }
+    }
+
+    public interface OnGenreClickListener {
+        void onGenreClick(Genre genre);
     }
 }

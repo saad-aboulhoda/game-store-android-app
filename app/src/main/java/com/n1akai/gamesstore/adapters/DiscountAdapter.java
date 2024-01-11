@@ -53,9 +53,9 @@ public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.itemView = itemView;
-            title = itemView.findViewById(R.id.text_view_discount_title);
-            img = itemView.findViewById(R.id.imgae_view_discount_img);
-            price = itemView.findViewById(R.id.text_view_discount_or_price);
+            title = itemView.findViewById(R.id.text_view_title);
+            img = itemView.findViewById(R.id.imgae_view_img);
+            price = itemView.findViewById(R.id.text_view_price);
             discount = itemView.findViewById(R.id.text_view_discount_perc);
             newPrice = itemView.findViewById(R.id.text_view_discount_new_price);
         }

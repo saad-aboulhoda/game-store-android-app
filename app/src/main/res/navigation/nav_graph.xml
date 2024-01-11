@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_gameDetailFragment"
             app:destination="@id/gameDetailFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_genreGamesFragment"
+            app:destination="@id/genreGamesFragment" />
     </fragment>
     <fragment
         android:id="@+id/signinFragment"
@@ -74,6 +77,12 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <action
+            android:id="@+id/action_gameDetailFragment_to_genreGamesFragment"
+            app:destination="@id/genreGamesFragment" />
+        <action
+            android:id="@+id/action_gameDetailFragment_self"
+            app:destination="@id/gameDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/userFragment"
@@ -119,7 +128,8 @@
             app:argType="java.util.ArrayList" />
         <action
             android:id="@+id/action_checkoutFragment_to_ordersFragment"
-            app:destination="@id/ordersFragment" />
+            app:destination="@id/ordersFragment"
+            app:popUpTo="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/ordersFragment"
@@ -130,4 +140,19 @@
         android:id="@+id/settingsFragment"
         android:name="com.n1akai.gamesstore.frags.SettingsFragment"
         android:label="@string/settings" />
+    <fragment
+        android:id="@+id/genreGamesFragment"
+        android:name="com.n1akai.gamesstore.frags.GenreGamesFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_genre_games">
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_genreGamesFragment_to_gameDetailFragment"
+            app:destination="@id/gameDetailFragment" />
+        <argument
+            android:name="genre"
+            app:argType="com.n1akai.gamesstore.models.Genre" />
+    </fragment>
 </navigation>

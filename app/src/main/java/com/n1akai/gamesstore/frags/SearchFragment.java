@@ -69,13 +69,6 @@ public class SearchFragment extends Fragment {
     }
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (adapter != null) 
-            adapter.stopListening();
-
-    }
 
     private void processSearch(String s) {
         query = FirebaseDatabase.getInstance().getReference("games").orderByChild("title").startAt(s).endAt(s+"\uf8ff");
@@ -83,8 +76,8 @@ public class SearchFragment extends Fragment {
                 .setQuery(query, Game.class)
                 .build();
 
-        adapter = new FilterAdapter(options);
-        adapter.startListening();
+//        adapter = new FilterAdapter(options);
+//        adapter.startListening();
         rc.setLayoutManager(new LinearLayoutManager(getContext()));
         rc.setAdapter(adapter);
     }

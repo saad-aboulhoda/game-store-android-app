@@ -45,7 +45,7 @@
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:background="#ddd"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color_primary"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/text_view_new_release_price"
                 app:layout_constraintEnd_toEndOf="parent"

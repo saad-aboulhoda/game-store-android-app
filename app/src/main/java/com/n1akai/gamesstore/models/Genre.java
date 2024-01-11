@@ -1,6 +1,8 @@
 package com.n1akai.gamesstore.models;
 
-public class Genre {
+import java.io.Serializable;
+
+public class Genre implements Serializable {
     private String id;
     private String title;
     private String imgUrl;
@@ -11,6 +13,11 @@ public class Genre {
 
     public Genre(String id) {
         this.id = id;
+    }
+
+    public Genre(String id, String title) {
+        this.id = id;
+        this.title = title;
     }
 
     public Genre(String id, String title, String imgUrl) {

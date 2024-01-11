@@ -21,14 +21,14 @@ public class Game implements Serializable {
     private String thumbnailUrl;
     private String price;
     private Map<String, Discount> discounts;
-    private List<String> genres;
+    private List<Genre> genres;
     private List<String> images;
 
     public Game() {
 
     }
 
-    public Game(String id, String title, String description, String publisher, String developer, Long releaseDate, String platforms, String posterUrl, String thumbnailUrl, String price, Map<String, Discount> discounts, List<String> genres, List<String> images) {
+    public Game(String id, String title, String description, String publisher, String developer, Long releaseDate, String platforms, String posterUrl, String thumbnailUrl, String price, Map<String, Discount> discounts, List<Genre> genres, List<String> images) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -88,7 +88,7 @@ public class Game implements Serializable {
         return discounts;
     }
 
-    public List<String> getGenres() {
+    public List<Genre> getGenres() {
         return genres;
     }
 

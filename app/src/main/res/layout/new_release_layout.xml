@@ -10,22 +10,27 @@
     android:layout_marginBottom="8dp"
     app:cardCornerRadius="8dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/image_view_new_release_img"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/new_release_img_1" />
+            android:src="@drawable/new_release_img_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="110dp"
-            android:padding="8dp">
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="@id/image_view_new_release_img"
+            app:layout_constraintStart_toStartOf="@id/image_view_new_release_img"
+            app:layout_constraintTop_toBottomOf="@id/image_view_new_release_img">
 
             <TextView
                 android:id="@+id/textView3"
@@ -41,14 +46,14 @@
 
             <TextView
                 android:id="@+id/text_view_new_release_title"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:text="Snowman"
-                android:textColor="@color/black"
+                android:textColor="@color/text_color_primary"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toTopOf="@+id/text_view_new_release_price"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -59,8 +64,8 @@
                 android:id="@+id/text_view_new_release_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="$4.99"
                 android:paddingTop="4dp"
+                android:text="$4.99"
                 android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -94,10 +99,10 @@
                 android:layout_marginEnd="4dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:visibility="invisible"
                 app:backgroundTint="@color/colorPrimary"
                 app:cornerRadius="15dp"
                 app:icon="@drawable/ic_check"
-                android:visibility="invisible"
                 app:iconSize="20dp"
                 app:iconTint="#fff"
                 app:layout_constraintBottom_toBottomOf="@+id/text_view_new_release_price"
@@ -107,5 +112,5 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
