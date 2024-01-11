@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
     ImageSlider imageSlider;
     ArrayList<SlideModel> slideImgs;
     RecyclerView genresRV, discountsRV, newReleasesRV;
-    ShimmerFrameLayout shimmerGenre, shimmerNewReleases;
+    ShimmerFrameLayout shimmerGenre, shimmerNewReleases, shimmerSlider;
     NavController navController;
     GenreAdapter genreAdapter;
     GameAdapter gameAdapter;
@@ -112,6 +112,14 @@ public class HomeFragment extends Fragment {
                 newReleasesRV.setVisibility(View.VISIBLE);
             }
         });
+
+        viewModel.getFinishedLoadingSlider().observe(requireActivity(), b -> {
+            if (b) {
+                shimmerSlider.stopShimmer();
+                shimmerSlider.setVisibility(View.GONE);
+                imageSlider.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public void initView() {
@@ -121,12 +129,13 @@ public class HomeFragment extends Fragment {
         newReleasesRV = v.findViewById(R.id.recycler_view_new_releases);
         shimmerGenre = v.findViewById(R.id.genre_shimmer);
         shimmerNewReleases = v.findViewById(R.id.new_releases_shimmer);
+        shimmerSlider = v.findViewById(R.id.slider_shimmer);
     }
 
     public void sliderImage() {
-        viewModel.sliderImage();
-        slideImgs = viewModel.getSlideImgs();
-        imageSlider.setImageList(slideImgs);
+        viewModel.navController = navController;
+        viewModel.sliderImage(imageSlider);
+
     }
 
     private void genres() {

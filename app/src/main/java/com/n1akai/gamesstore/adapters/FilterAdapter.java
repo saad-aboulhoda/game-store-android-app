@@ -1,5 +1,6 @@
 package com.n1akai.gamesstore.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,12 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
 
     public FilterAdapter(List<Game> games) {
         this.games = games;
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void filter(List<Game> games) {
+        this.games = games;
+        notifyDataSetChanged();
     }
 
     @Override

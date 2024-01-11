@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     AppBarConfiguration appBarConfiguration;
 
     private void initView() {
-        searchBarEt = findViewById(R.id.edit_text_search);
+        searchBarEt = findViewById(R.id.edit_text_main_search);
         toolbar = findViewById(R.id.toolbar);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -76,9 +76,20 @@ public class HomeActivity extends AppCompatActivity {
     private void hideBottomNavOnGameDetail() {
         navController.addOnDestinationChangedListener((navController, navDestination, bundle) -> {
             if(navDestination.getId() == R.id.gameDetailFragment) {
+                toolbar.getMenu().clear();
+                toolbar.inflateMenu(R.menu.game_detail_menu);
+                bottomNavigationView.setVisibility(View.GONE);
+            } else if(navDestination.getId() == R.id.searchFragment) {
+                toolbar.getMenu().clear();
+                searchBarEt.setVisibility(View.VISIBLE);
+                bottomNavigationView.setVisibility(View.GONE);
+            } else if(navDestination.getId() == R.id.genreGamesFragment) {
                 bottomNavigationView.setVisibility(View.GONE);
             } else {
+                toolbar.getMenu().clear();
+                toolbar.inflateMenu(R.menu.main_menu);
                 bottomNavigationView.setVisibility(View.VISIBLE);
+                searchBarEt.setVisibility(View.GONE);
             }
         });
     }

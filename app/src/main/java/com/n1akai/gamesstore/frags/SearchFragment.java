@@ -18,18 +18,25 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.n1akai.gamesstore.R;
 import com.n1akai.gamesstore.adapters.FilterAdapter;
 import com.n1akai.gamesstore.models.Game;
+
+import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
 
 
     FilterAdapter adapter;
     RecyclerView rc;
-    Query query;
+    ArrayList<Game> games;
+    DatabaseReference mRef;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -47,38 +54,58 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rc = view.findViewById(R.id.rc_search);
-
+        adapter = new FilterAdapter(new ArrayList<Game>());
+        rc.setLayoutManager(new LinearLayoutManager(getContext()));
+        rc.setAdapter(adapter);
         EditText et = getActivity().findViewById(R.id.edit_text_main_search);
-        et.addTextChangedListener(new TextWatcher() {
+        et.setEnabled(false);
+        games = new ArrayList<>();
+        mRef = FirebaseDatabase.getInstance().getReference("games");
+        mRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                games.clear();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    games.add(ds.getValue(Game.class));
+                }
+                et.setEnabled(true);
+                et.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        processSearch(s.toString());
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                processSearch(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
     }
 
 
 
     private void processSearch(String s) {
-        query = FirebaseDatabase.getInstance().getReference("games").orderByChild("title").startAt(s).endAt(s+"\uf8ff");
-        FirebaseRecyclerOptions<Game> options = new FirebaseRecyclerOptions.Builder<Game>()
-                .setQuery(query, Game.class)
-                .build();
+        ArrayList<Game> filteredList = new ArrayList<>();
+        if(!s.trim().isEmpty()) {
+            for(Game game: games) {
+                if (game.getTitle().toLowerCase().contains(s.trim().toLowerCase())) {
+                    filteredList.add(game);
+                }
+            }
+        }
+        adapter.filter(filteredList);
 
-//        adapter = new FilterAdapter(options);
-//        adapter.startListening();
-        rc.setLayoutManager(new LinearLayoutManager(getContext()));
-        rc.setAdapter(adapter);
     }
 }

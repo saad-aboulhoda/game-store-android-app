@@ -57,4 +57,8 @@ public class Order implements Serializable {
     public Long getCreatedAt() {
         return createdAt;
     }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

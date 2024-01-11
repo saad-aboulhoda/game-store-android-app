@@ -15,17 +15,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/slider_shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include layout="@layout/slider_layout_shimmer" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/image_slider"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
+                android:visibility="gone"
                 app:iss_auto_cycle="true"
                 app:iss_delay="1000"
                 app:iss_period="3000"
                 app:iss_placeholder="@drawable/placeholder"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/slider_shimmer" />
 
 
                 <TextView

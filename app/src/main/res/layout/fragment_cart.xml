@@ -27,7 +27,7 @@
                 android:id="@+id/cart_et_games_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 games"
+                android:text="@string/games"
                 app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Games"
+                android:text="@string/games"
                 android:textColor="@color/text_color_primary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"

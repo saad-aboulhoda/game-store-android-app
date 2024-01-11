@@ -1,5 +1,6 @@
 package com.n1akai.gamesstore.frags;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,13 +9,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.n1akai.gamesstore.R;
@@ -30,6 +38,8 @@ public class OrdersFragment extends Fragment {
     FirebaseUser user;
     RecyclerView rc;
     Query query;
+    Order mCurrentItemOrder;
+    DatabaseReference mRef;
 
     public OrdersFragment() {
         // Required empty public constructor
@@ -47,6 +57,7 @@ public class OrdersFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rc = view.findViewById(R.id.orders_rc);
+        mRef = FirebaseDatabase.getInstance().getReference("orders");
         user = FirebaseAuth.getInstance().getCurrentUser();
         query = FirebaseDatabase.getInstance().getReference("orders").child(user.getUid()).orderByChild("createdAt");
         FirebaseRecyclerOptions<Order> options = new FirebaseRecyclerOptions.Builder<Order>()
@@ -56,6 +67,46 @@ public class OrdersFragment extends Fragment {
         adapter = new OrderAdapter(options);
         rc.setLayoutManager(new LinearLayoutManager(getContext()));
         rc.setAdapter(adapter);
+        registerForContextMenu(rc);
+        adapter.setOnLongItemClickListener((v, order) -> {
+            mCurrentItemOrder = order;
+            v.showContextMenu();
+        });
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getActivity().getMenuInflater().inflate(R.menu.order_contextual_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.cancel_order) {
+            if (mCurrentItemOrder.getStatus().equals(Order.COMPLETED)) {
+                Toast.makeText(getContext(), getResources().getString(R.string.completed_already), Toast.LENGTH_SHORT).show();
+            } else if(mCurrentItemOrder.getStatus().equals(Order.CANCELED)) {
+                Toast.makeText(getContext(), getResources().getString(R.string.canceled_already), Toast.LENGTH_SHORT).show();
+            } else {
+                new MaterialAlertDialogBuilder(getContext())
+                        .setTitle(getResources().getString(R.string.cancel_order))
+                        .setMessage(getResources().getString(R.string.do_you_want_to_cancel))
+                        .setNegativeButton(getResources().getString(R.string.no), (dialog, which) -> {
+
+                        })
+                        .setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> {
+                            mCurrentItemOrder.setStatus(Order.CANCELED);
+                            mRef.child(user.getUid()).child(mCurrentItemOrder.getRef()).setValue(mCurrentItemOrder).addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(getContext(), getResources().getString(R.string.canceled_successfully), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        })
+                        .show();
+            }
+        }
+        return true;
     }
 
     @Override

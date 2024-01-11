@@ -33,6 +33,13 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<Order, OrderAdapter.Vi
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull Order model) {
         holder.bindView(model);
+        holder.itemView.setOnLongClickListener(v -> {
+            if (mOnLongItemClickListener != null) {
+                mOnLongItemClickListener.itemLongClicked(v, model);
+            }
+
+            return true;
+        });
     }
 
     @NonNull
@@ -73,6 +80,16 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<Order, OrderAdapter.Vi
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
             return simpleDateFormat.format(date);
         }
+    }
+
+    OnLongItemClickListener mOnLongItemClickListener;
+
+    public void setOnLongItemClickListener(OnLongItemClickListener onLongItemClickListener) {
+        mOnLongItemClickListener = onLongItemClickListener;
+    }
+
+    public interface OnLongItemClickListener {
+        void itemLongClicked(View v, Order order);
     }
 
 }

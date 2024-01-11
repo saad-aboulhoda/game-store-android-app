@@ -47,6 +47,25 @@
     <string name="game_images">Les photos du jeux</string>
     <string name="similar_games">Jeux similaires</string>
     <string name="zero_game_found">0 jeu trouvé</string>
+    <string name="completed_already">Déjà complété</string>
+    <string name="canceled_already">Déjà annulé</string>
+    <string name="canceled_successfully">Annulé avec succès!</string>
+    <string name="cancel_order">Annuler la commande</string>
+    <string name="do_you_want_to_cancel">Voulez-vous annuler cette commande?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
+    <string name="games">Jeux</string>
+    <string name="zero_games">0 jeux</string>
+    <string name="total_games">Total des jeux</string>
+    <string name="sub_total">Sous-total</string>
+    <string name="total">Total</string>
+    <string name="checkout">Vérifier</string>
+    <string name="discount">Réduction</string>
+    <string name="deleted_successfully">Supprimé avec succès!</string>
+    <string name="coupon_is_valid">Le coupon est valide</string>
+    <string name="coupon_is_not_valid">Le coupon n\'est pas valide</string>
+    <string name="you_have_to_login">Vous devez vous connecter d\'abord</string>
+
 
     <string name="hello_blank_fragment">Bonjour fragment vide</string>
     <!-- Preference Titles -->

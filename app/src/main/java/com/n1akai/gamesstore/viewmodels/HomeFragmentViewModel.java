@@ -1,16 +1,15 @@
 package com.n1akai.gamesstore.viewmodels;
 
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.navigation.NavController;
 
+import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.ChangeEventListener;
@@ -18,23 +17,24 @@ import com.firebase.ui.database.ClassSnapshotParser;
 import com.firebase.ui.database.FirebaseArray;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.n1akai.gamesstore.R;
-import com.n1akai.gamesstore.adapters.GenreAdapter;
+import com.google.firebase.database.ValueEventListener;
+import com.n1akai.gamesstore.frags.HomeFragmentDirections;
 import com.n1akai.gamesstore.models.Game;
 import com.n1akai.gamesstore.models.Genre;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Objects;
 
 public class HomeFragmentViewModel extends ViewModel {
     ArrayList<SlideModel> slideImgs;
     public FirebaseArray<Game> games;
     public FirebaseArray<Genre> genres;
+    public NavController navController;
 
     private MutableLiveData<Boolean> finishedLoadingGenres = new MutableLiveData<>();
     private MutableLiveData<Boolean> finishedLoadingNewReleases = new MutableLiveData<>();
+    private MutableLiveData<Boolean> finishedLoadingSlider = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> getFinishedLoadingGenres() {
         return finishedLoadingGenres;
@@ -42,6 +42,10 @@ public class HomeFragmentViewModel extends ViewModel {
 
     public MutableLiveData<Boolean> getFinishedLoadingNewReleases() {
         return finishedLoadingNewReleases;
+    }
+
+    public MutableLiveData<Boolean> getFinishedLoadingSlider() {
+        return finishedLoadingSlider;
     }
 
     public HomeFragmentViewModel() {
@@ -57,7 +61,7 @@ public class HomeFragmentViewModel extends ViewModel {
             public void onDataChanged() {
                 new Handler().postDelayed(() -> {
                     finishedLoadingNewReleases.setValue(true);
-                }, 500);
+                }, 1000);
             }
 
             @Override
@@ -75,7 +79,7 @@ public class HomeFragmentViewModel extends ViewModel {
             public void onDataChanged() {
                 new Handler().postDelayed(() -> {
                     finishedLoadingGenres.setValue(true);
-                }, 500);
+                }, 1000);
             }
 
             @Override
@@ -86,23 +90,51 @@ public class HomeFragmentViewModel extends ViewModel {
     }
 
 
+    public void sliderImage(ImageSlider imageSlider) {
+        slideImgs = new ArrayList<>();
+        ArrayList<Game> theGames = new ArrayList<>();
+        DatabaseReference mRef = FirebaseDatabase.getInstance().getReference("slider");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                slideImgs.clear();
+                new Handler().postDelayed(() -> {
+                    finishedLoadingSlider.setValue(true);
+                }, 1000);
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()) {
+                    Game game = dataSnapshot.getValue(Game.class);
+                    theGames.add(game);
+                    slideImgs.add(new SlideModel(game.getThumbnailUrl(), ScaleTypes.CENTER_CROP));
+
+                }
+               imageSlider.setImageList(slideImgs);
+               imageSlider.setItemClickListener(new ItemClickListener() {
+                    @Override
+                    public void onItemSelected(int i) {
+                        Game game = theGames.get(i);
+                        navController.navigate(HomeFragmentDirections.actionHomeFragmentToGameDetailFragment(game, game.getTitle()));
+                    }
+
+                    @Override
+                    public void doubleClick(int i) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
         games = null;
         genres = null;
+        slideImgs = null;
     }
 
-    public void sliderImage() {
-        slideImgs = new ArrayList<>();
-        slideImgs.add(new SlideModel(R.drawable.new_slide_img_1, ScaleTypes.CENTER_CROP));
-        slideImgs.add(new SlideModel(R.drawable.new_slide_img_2, ScaleTypes.CENTER_CROP));
-        slideImgs.add(new SlideModel(R.drawable.new_slide_img_3, ScaleTypes.CENTER_CROP));
-        slideImgs.add(new SlideModel(R.drawable.new_slide_img_4, ScaleTypes.CENTER_CROP));
-    }
-
-
-    public ArrayList<SlideModel> getSlideImgs() {
-        return slideImgs;
-    }
 }

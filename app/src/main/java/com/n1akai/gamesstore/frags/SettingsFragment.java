@@ -41,9 +41,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 boolean isDarkModeEnabled = (boolean) newValue;
                 setDarkMode(isDarkModeEnabled);
 
-                // Refresh the activity by recreating it
-                refreshActivity();
-
                 return true;
             });
         }
