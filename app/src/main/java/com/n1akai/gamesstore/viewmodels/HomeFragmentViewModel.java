@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.n1akai.gamesstore.frags.HomeFragmentDirections;
+import com.n1akai.gamesstore.models.Discount;
 import com.n1akai.gamesstore.models.Game;
 import com.n1akai.gamesstore.models.Genre;
 
@@ -30,10 +31,12 @@ public class HomeFragmentViewModel extends ViewModel {
     ArrayList<SlideModel> slideImgs;
     public FirebaseArray<Game> games;
     public FirebaseArray<Genre> genres;
+    public FirebaseArray<Discount> discounts;
     public NavController navController;
 
     private MutableLiveData<Boolean> finishedLoadingGenres = new MutableLiveData<>();
     private MutableLiveData<Boolean> finishedLoadingNewReleases = new MutableLiveData<>();
+    private MutableLiveData<Boolean> finishedLoadingDiscounts = new MutableLiveData<>();
     private MutableLiveData<Boolean> finishedLoadingSlider = new MutableLiveData<>();
 
     public MutableLiveData<Boolean> getFinishedLoadingGenres() {
@@ -48,9 +51,14 @@ public class HomeFragmentViewModel extends ViewModel {
         return finishedLoadingSlider;
     }
 
+    public MutableLiveData<Boolean> getFinishedLoadingDiscounts() {
+        return finishedLoadingDiscounts;
+    }
+
     public HomeFragmentViewModel() {
         games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").orderByChild("releaseDate").limitToLast(6), new ClassSnapshotParser<>(Game.class));
         genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
+        discounts = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("discounts").limitToLast(5), new ClassSnapshotParser<>(Discount.class));
         games.addChangeEventListener(new ChangeEventListener() {
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
@@ -80,6 +88,23 @@ public class HomeFragmentViewModel extends ViewModel {
                 new Handler().postDelayed(() -> {
                     finishedLoadingGenres.setValue(true);
                 }, 1000);
+            }
+
+            @Override
+            public void onError(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        discounts.addChangeEventListener(new ChangeEventListener() {
+            @Override
+            public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
+
+            }
+
+            @Override
+            public void onDataChanged() {
+                new Handler().postDelayed(() -> finishedLoadingDiscounts.setValue(true), 1000);
             }
 
             @Override
@@ -135,6 +160,7 @@ public class HomeFragmentViewModel extends ViewModel {
         games = null;
         genres = null;
         slideImgs = null;
+        discounts = null;
     }
 
 }

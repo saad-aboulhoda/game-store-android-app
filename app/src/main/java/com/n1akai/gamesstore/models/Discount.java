@@ -1,47 +1,46 @@
 package com.n1akai.gamesstore.models;
 
 public class Discount {
+    private String id;
     private String title;
-    private int img;
-    private Double price;
-    private Double discount;
+    private String img;
+    private String price;
+    private String discount;
+    private Game game;
 
-    public Discount(String title, int img, Double price, Double discount) {
+    public Discount() {
+    }
+
+    public Discount(String id, String title, String img, String price, String discount, Game game) {
+        this.id = id;
         this.title = title;
         this.img = img;
         this.price = price;
         this.discount = discount;
+        this.game = game;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
-        this.img = img;
-    }
-
-    public Double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Double getDiscount() {
+    public String getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Double discount) {
-        this.discount = discount;
+    public Game getGame() {
+        return game;
     }
 }

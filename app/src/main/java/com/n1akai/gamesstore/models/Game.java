@@ -20,7 +20,7 @@ public class Game implements Serializable {
     private String posterUrl;
     private String thumbnailUrl;
     private String price;
-    private Map<String, Discount> discounts;
+    private Discount discount;
     private List<Genre> genres;
     private List<String> images;
 
@@ -28,7 +28,7 @@ public class Game implements Serializable {
 
     }
 
-    public Game(String id, String title, String description, String publisher, String developer, Long releaseDate, String platforms, String posterUrl, String thumbnailUrl, String price, Map<String, Discount> discounts, List<Genre> genres, List<String> images) {
+    public Game(String id, String title, String description, String publisher, String developer, Long releaseDate, String platforms, String posterUrl, String thumbnailUrl, String price, List<Genre> genres, List<String> images) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -39,7 +39,22 @@ public class Game implements Serializable {
         this.posterUrl = posterUrl;
         this.thumbnailUrl = thumbnailUrl;
         this.price = price;
-        this.discounts = discounts;
+        this.genres = genres;
+        this.images = images;
+    }
+
+    public Game(String id, String title, String description, String publisher, String developer, Long releaseDate, String platforms, String posterUrl, String thumbnailUrl, String price, Discount discount, List<Genre> genres, List<String> images) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.publisher = publisher;
+        this.developer = developer;
+        this.releaseDate = releaseDate;
+        this.platforms = platforms;
+        this.posterUrl = posterUrl;
+        this.thumbnailUrl = thumbnailUrl;
+        this.price = price;
+        this.discount = discount;
         this.genres = genres;
         this.images = images;
     }
@@ -81,11 +96,14 @@ public class Game implements Serializable {
     }
 
     public String getPrice() {
+        if (this.discount != null) {
+            return ""+Double.parseDouble(price)*(1- Double.parseDouble(discount.getDiscount()));
+        }
         return price;
     }
 
-    public Map<String, Discount> getDiscounts() {
-        return discounts;
+    public Discount getDiscount() {
+        return discount;
     }
 
     public List<Genre> getGenres() {
@@ -95,6 +113,4 @@ public class Game implements Serializable {
     public List<String> getImages() {
         return images;
     }
-
-
 }

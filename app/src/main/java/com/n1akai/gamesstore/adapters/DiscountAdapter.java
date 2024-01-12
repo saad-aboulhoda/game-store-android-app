@@ -8,20 +8,30 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.n1akai.gamesstore.models.Discount;
 import com.n1akai.gamesstore.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHolder> {
+public class DiscountAdapter extends FirebaseRecyclerAdapter<Discount ,DiscountAdapter.ViewHolder> {
 
-    ArrayList<Discount> discounts;
     OnItemClickListener clickListener;
 
-    public DiscountAdapter(ArrayList<Discount> discounts) {
-        this.discounts = discounts;
+    /**
+     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
+     * {@link FirebaseRecyclerOptions} for configuration options.
+     *
+     * @param options
+     */
+    public DiscountAdapter(@NonNull FirebaseRecyclerOptions<Discount> options) {
+        super(options);
     }
+
 
     @NonNull
     @Override
@@ -30,14 +40,8 @@ public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Discount discount = discounts.get(position);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position, Discount discount) {
         holder.bind(discount);
-    }
-
-    @Override
-    public int getItemCount() {
-        return discounts.size();
     }
 
     public void setOnGameClickListener(OnItemClickListener clickListener) {
@@ -63,13 +67,17 @@ public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHo
         public void bind(Discount discount) {
             title.setText(discount.getTitle());
             price.setText("$"+discount.getPrice());
-            this.discount.setText("-"+discount.getDiscount()*100+"%");
-            String nPrice = String.format("%.2f", (discount.getPrice() * (1-discount.getDiscount())));
+            this.discount.setText("-"+Double.parseDouble(discount.getDiscount())*100+"%");
+            String nPrice = String.format("%.2f", (Double.parseDouble(discount.getPrice()) * (1-Double.parseDouble(discount.getDiscount()))));
             newPrice.setText("$"+nPrice);
-            img.setImageResource(discount.getImg());
-//            itemView.setOnClickListener(v -> {
-//                clickListener.onGameClick();
-//            });
+            CircularProgressDrawable cpd = new CircularProgressDrawable(itemView.getContext());
+            cpd.setStrokeWidth(5f);
+            cpd.setCenterRadius(30f);
+            cpd.start();
+            Picasso.get().load(discount.getImg()).placeholder(cpd).into(img);
+            itemView.setOnClickListener(v -> {
+                clickListener.onGameClick(discount.getGame());
+            });
         }
     }
 }

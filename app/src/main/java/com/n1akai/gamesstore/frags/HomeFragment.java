@@ -152,12 +152,11 @@ public class HomeFragment extends Fragment {
 
 
     private void discounts() {
-        ArrayList<Discount> discounts = new ArrayList<>();
-        discounts.add(new Discount("Shattered: Tale of the Forgotten King", R.drawable.discount_img_1, 29.99, 0.8));
-        discounts.add(new Discount("Beacon Pines", R.drawable.discount_img_2, 19.99, 0.4));
-        discounts.add(new Discount("SCARF", R.drawable.discount_img_3, 14.99, 0.5));
-        DiscountAdapter adapter = new DiscountAdapter(discounts);
+        FirebaseRecyclerOptions<Discount> options = new FirebaseRecyclerOptions.Builder<Discount>()
+                .setSnapshotArray(viewModel.discounts)
+                .build();
 
+        DiscountAdapter adapter = new DiscountAdapter(options);
         discountsRV.setHasFixedSize(true);
         discountsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         discountsRV.setAdapter(adapter);

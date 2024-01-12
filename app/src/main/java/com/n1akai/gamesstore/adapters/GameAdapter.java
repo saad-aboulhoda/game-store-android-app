@@ -75,7 +75,7 @@ public class GameAdapter extends FirebaseRecyclerAdapter<Game, GameAdapter.ViewH
 
         public void bind(Game game) {
             title.setText(game.getTitle());
-            String price = "$"+game.getPrice();
+            String price = "$"+String.format("%.2f", Double.parseDouble(game.getPrice()));;
             this.price.setText(price);
             CircularProgressDrawable cpd = new CircularProgressDrawable(itemView.getContext());
             cpd.setStrokeWidth(5f);
