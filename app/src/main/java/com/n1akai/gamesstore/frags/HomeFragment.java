@@ -120,6 +120,8 @@ public class HomeFragment extends Fragment {
                 imageSlider.setVisibility(View.VISIBLE);
             }
         });
+
+
     }
 
     public void initView() {
@@ -160,6 +162,8 @@ public class HomeFragment extends Fragment {
         discountsRV.setHasFixedSize(true);
         discountsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         discountsRV.setAdapter(adapter);
+
+        adapter.setOnGameClickListener(this::navigateToGameDetail);
     }
 
     private void latestGames() {

@@ -1,5 +1,6 @@
 package com.n1akai.gamesstore.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,9 +76,7 @@ public class DiscountAdapter extends FirebaseRecyclerAdapter<Discount ,DiscountA
             cpd.setCenterRadius(30f);
             cpd.start();
             Picasso.get().load(discount.getImg()).placeholder(cpd).into(img);
-            itemView.setOnClickListener(v -> {
-                clickListener.onGameClick(discount.getGame());
-            });
+            Log.d("MYTAG", discount.getTitle());
         }
     }
 }

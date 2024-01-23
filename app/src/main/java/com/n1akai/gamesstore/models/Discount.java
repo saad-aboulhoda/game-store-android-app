@@ -6,7 +6,6 @@ public class Discount {
     private String img;
     private String price;
     private String discount;
-    private Game game;
 
     public Discount() {
     }
@@ -17,7 +16,6 @@ public class Discount {
         this.img = img;
         this.price = price;
         this.discount = discount;
-        this.game = game;
     }
 
     public String getId() {
@@ -38,9 +36,5 @@ public class Discount {
 
     public String getDiscount() {
         return discount;
-    }
-
-    public Game getGame() {
-        return game;
     }
 }

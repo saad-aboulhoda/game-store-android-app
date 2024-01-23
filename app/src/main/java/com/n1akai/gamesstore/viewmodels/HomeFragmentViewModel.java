@@ -1,6 +1,7 @@
 package com.n1akai.gamesstore.viewmodels;
 
 import android.os.Handler;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
@@ -58,7 +59,7 @@ public class HomeFragmentViewModel extends ViewModel {
     public HomeFragmentViewModel() {
         games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").orderByChild("releaseDate").limitToLast(6), new ClassSnapshotParser<>(Game.class));
         genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
-        discounts = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("discounts").limitToLast(5), new ClassSnapshotParser<>(Discount.class));
+        discounts = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("discounts"), new ClassSnapshotParser<>(Discount.class));
         games.addChangeEventListener(new ChangeEventListener() {
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
@@ -104,6 +105,7 @@ public class HomeFragmentViewModel extends ViewModel {
 
             @Override
             public void onDataChanged() {
+                Log.d("MYTAG", "HEELO");
                 new Handler().postDelayed(() -> finishedLoadingDiscounts.setValue(true), 1000);
             }
 
