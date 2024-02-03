@@ -27,12 +27,13 @@ import com.n1akai.gamesstore.models.Game;
 import com.n1akai.gamesstore.models.Genre;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragmentViewModel extends ViewModel {
     ArrayList<SlideModel> slideImgs;
     public FirebaseArray<Game> games;
     public FirebaseArray<Genre> genres;
-    public FirebaseArray<Discount> discounts;
+    public List<Game> discounts;
     public NavController navController;
 
     private MutableLiveData<Boolean> finishedLoadingGenres = new MutableLiveData<>();
@@ -59,7 +60,7 @@ public class HomeFragmentViewModel extends ViewModel {
     public HomeFragmentViewModel() {
         games = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("games").orderByChild("releaseDate").limitToLast(6), new ClassSnapshotParser<>(Game.class));
         genres = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("genres"), new ClassSnapshotParser<>(Genre.class));
-        discounts = new FirebaseArray<>(FirebaseDatabase.getInstance().getReference("discounts"), new ClassSnapshotParser<>(Discount.class));
+
         games.addChangeEventListener(new ChangeEventListener() {
             @Override
             public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
@@ -89,24 +90,6 @@ public class HomeFragmentViewModel extends ViewModel {
                 new Handler().postDelayed(() -> {
                     finishedLoadingGenres.setValue(true);
                 }, 1000);
-            }
-
-            @Override
-            public void onError(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        discounts.addChangeEventListener(new ChangeEventListener() {
-            @Override
-            public void onChildChanged(@NonNull ChangeEventType type, @NonNull DataSnapshot snapshot, int newIndex, int oldIndex) {
-
-            }
-
-            @Override
-            public void onDataChanged() {
-                Log.d("MYTAG", "HEELO");
-                new Handler().postDelayed(() -> finishedLoadingDiscounts.setValue(true), 1000);
             }
 
             @Override

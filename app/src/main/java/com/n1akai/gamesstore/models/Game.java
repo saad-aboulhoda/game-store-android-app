@@ -20,7 +20,7 @@ public class Game implements Serializable {
     private String posterUrl;
     private String thumbnailUrl;
     private String price;
-    private Discount discount;
+    private String discount;
     private List<Genre> genres;
     private List<String> images;
 
@@ -43,7 +43,7 @@ public class Game implements Serializable {
         this.images = images;
     }
 
-    public Game(String id, String title, String description, String publisher, String developer, Long releaseDate, String platforms, String posterUrl, String thumbnailUrl, String price, Discount discount, List<Genre> genres, List<String> images) {
+    public Game(String id, String title, String description, String publisher, String developer, Long releaseDate, String platforms, String posterUrl, String thumbnailUrl, String price, String discount, List<Genre> genres, List<String> images) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -97,12 +97,13 @@ public class Game implements Serializable {
 
     public String getPrice() {
         if (this.discount != null) {
-            return ""+Double.parseDouble(price)*(1- Double.parseDouble(discount.getDiscount()));
+            double thePrice = Double.parseDouble(price)*(1- Double.parseDouble(discount));
+            return String.format("%.2f", thePrice);
         }
         return price;
     }
 
-    public Discount getDiscount() {
+    public String getDiscount() {
         return discount;
     }
 

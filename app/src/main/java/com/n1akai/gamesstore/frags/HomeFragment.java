@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.n1akai.gamesstore.adapters.DiscountAdapter;
 import com.n1akai.gamesstore.adapters.GenreAdapter;
 import com.n1akai.gamesstore.adapters.GameAdapter;
@@ -46,6 +49,7 @@ import com.n1akai.gamesstore.viewmodels.HomeFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 
 public class HomeFragment extends Fragment {
@@ -147,21 +151,47 @@ public class HomeFragment extends Fragment {
 
         genreAdapter = new GenreAdapter(options);
         genresRV.setHasFixedSize(true);
-        genresRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        genresRV
+                .setLayoutManager(
+                        new LinearLayoutManager(getActivity(),
+                            LinearLayoutManager.HORIZONTAL,
+                            false)
+                );
         genresRV.setAdapter(genreAdapter);
         genreAdapter.setOnGenreClickListener(this::navigateToGenreGames);
     }
 
 
     private void discounts() {
-        FirebaseRecyclerOptions<Discount> options = new FirebaseRecyclerOptions.Builder<Discount>()
-                .setSnapshotArray(viewModel.discounts)
-                .build();
+        List<Game> discounts = new ArrayList<>();
+        DiscountAdapter adapter = new DiscountAdapter(discounts);
 
-        DiscountAdapter adapter = new DiscountAdapter(options);
         discountsRV.setHasFixedSize(true);
-        discountsRV.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        discountsRV
+                .setLayoutManager(
+                        new LinearLayoutManager(getActivity(),
+                        LinearLayoutManager.HORIZONTAL,
+                        false)
+                );
         discountsRV.setAdapter(adapter);
+
+        FirebaseDatabase.getInstance().getReference("games").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                discounts.clear();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Game game = ds.getValue(Game.class);
+                    if (game.getDiscount() != null && Double.parseDouble(game.getDiscount()) > 0.0)
+                        discounts.add(ds.getValue(Game.class));
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         adapter.setOnGameClickListener(this::navigateToGameDetail);
     }
@@ -178,7 +208,8 @@ public class HomeFragment extends Fragment {
                 cartItemDR = cartDR.child(user.getUid()).child(game.getId());
                 addToCart(game, cartBtn, checkBtn);
             } else {
-                Toast.makeText(getContext(), "You have to login first", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "You have to login first", Toast.LENGTH_SHORT)
+                        .show();
                 navigateToUserLogin();
             }
         });
@@ -196,15 +227,23 @@ public class HomeFragment extends Fragment {
                 if (cartItem != null)
                     cartItem.plus();
                 else {
-                    cartItem = new CartItem(game.getId(), game.getTitle(), game.getDescription(), game.getPrice(), game.getPosterUrl());
+                    cartItem = new CartItem(
+                            game.getId(),
+                            game.getTitle(),
+                            game.getDescription(),
+                            game.getPrice(),
+                            game.getPosterUrl()
+                    );
                 }
                 cartItemDR.setValue(cartItem).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
                         cartBtn.setVisibility(View.INVISIBLE);
                         checkBtn.setVisibility(View.VISIBLE);
-                        Toast.makeText(getContext(), "Added Successfuly!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Added Successfuly!", Toast.LENGTH_SHORT)
+                                .show();
                     } else {
-                        Toast.makeText(getContext(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getResources().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT)
+                                .show();
                     }
                 });
             }
