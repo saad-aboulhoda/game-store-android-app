@@ -6,6 +6,7 @@ It is a modern game store, where you buy a game easily.
 # Tools used
 - Java
 - Firebase
+- Glide
 - Android Studio IDE
 - Android version 4.0 or later
 - Android SDK 24-34
