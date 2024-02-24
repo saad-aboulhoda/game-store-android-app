@@ -20,6 +20,16 @@ It is a modern game store, where you buy a game easily.
 
 <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s1.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s2.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s3.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s4.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s5.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s6.png" width="98" height="200" />
 
+## Dashboard
+
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/d_s_1.png" />
+
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/d_s_2.png" />
+
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/d_s_3.png" />
+
+
+
 # Feedback
 
 If you have any feedback, please reach out to me at saad.aboulhoda@gmail.com
