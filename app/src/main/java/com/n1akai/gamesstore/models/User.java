@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class User implements Serializable {
 
-    private String firstName, lastName, email, avatarUrl;
+    private String id, firstName, lastName, email, avatarUrl = "";
 
     public User() {
     }
@@ -22,7 +22,23 @@ public class User implements Serializable {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.avatarUrl = this.avatarUrl;
+        this.avatarUrl = avatarUrl;
+    }
+
+    public User(String id, String firstName, String lastName, String email, String avatarUrl) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -60,9 +76,9 @@ public class User implements Serializable {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("firstName", firstName);
-        result.put("firstName", lastName);
-        result.put("firstName", email);
-        result.put("firstName", avatarUrl);
-        return  result;
+        result.put("lastName", lastName);
+        result.put("email", email);
+        result.put("avatarUrl", avatarUrl);
+        return result;
     }
 }

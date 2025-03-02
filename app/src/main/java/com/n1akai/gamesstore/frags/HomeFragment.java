@@ -150,7 +150,6 @@ public class HomeFragment extends Fragment {
                 .build();
 
         genreAdapter = new GenreAdapter(options);
-        genresRV.setHasFixedSize(true);
         genresRV
                 .setLayoutManager(
                         new LinearLayoutManager(getActivity(),
@@ -165,8 +164,6 @@ public class HomeFragment extends Fragment {
     private void discounts() {
         List<Game> discounts = new ArrayList<>();
         DiscountAdapter adapter = new DiscountAdapter(discounts);
-
-        discountsRV.setHasFixedSize(true);
         discountsRV
                 .setLayoutManager(
                         new LinearLayoutManager(getActivity(),
@@ -213,7 +210,6 @@ public class HomeFragment extends Fragment {
                 navigateToUserLogin();
             }
         });
-        newReleasesRV.setHasFixedSize(true);
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         layoutManager.setReverseLayout(true);
         newReleasesRV.setLayoutManager(layoutManager);

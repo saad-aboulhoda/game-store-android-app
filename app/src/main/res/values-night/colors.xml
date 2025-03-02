@@ -4,6 +4,7 @@
     <color name="text_color_secondary">#000</color>
     <color name="main_background">#121212</color>
     <color name="toolbar_bg">#1f1f1f</color>
+    <color name="text_field">#1f1f1f</color>
 
     <color name="colorPrimary">#F64B4B</color>
     <color name="colorPrimaryVariant">#ec5551</color>

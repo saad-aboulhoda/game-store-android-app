@@ -91,10 +91,10 @@ public class SignupFragment extends Fragment {
         } else {
             firstNameLayout.setError(null);
         }
-        if(lName.isEmpty()) {
+        if (lName.isEmpty()) {
             lastNameLayout.setError(error);
             return false;
-        } else  {
+        } else {
             lastNameLayout.setError(null);
         }
         if (email.isEmpty()) {
@@ -147,7 +147,7 @@ public class SignupFragment extends Fragment {
                         progressIndicator.setVisibility(View.INVISIBLE);
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            mRef.child(user.getUid()).setValue(new User(fName, lName, email));
+                            mRef.child(user.getUid()).setValue(new User(user.getUid(), fName, lName, email, ""));
                             Toast.makeText(getActivity().getBaseContext(), getResources().getString(R.string.success), Toast.LENGTH_SHORT).show();
                             navigateToUser();
                         } else {

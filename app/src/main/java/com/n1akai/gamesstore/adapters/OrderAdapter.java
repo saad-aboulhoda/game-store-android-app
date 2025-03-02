@@ -51,6 +51,7 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<Order, OrderAdapter.Vi
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView ref, totalPrice, orderDate;
         ImageView statusImg;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ref = itemView.findViewById(R.id.order_ref);
@@ -60,7 +61,7 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<Order, OrderAdapter.Vi
         }
 
         public void bindView(Order order) {
-            ref.setText("Ref: " + order.getRef());
+            ref.setText("Order: " + getFourDigitNumber(order.getCreatedAt()));
             totalPrice.setText("Total pirce: " + order.getTotalPrice());
             orderDate.setText("Ordered at: " + formatedDate(order.getCreatedAt()));
             switch (order.getStatus()) {
@@ -90,6 +91,23 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<Order, OrderAdapter.Vi
 
     public interface OnLongItemClickListener {
         void itemLongClicked(View v, Order order);
+    }
+
+    public static int getFourDigitNumber(long dateMs) {
+        if (dateMs <= 0) {
+            throw new IllegalArgumentException("Invalid date in milliseconds");
+        }
+
+        // Simple hash function to compress the milliseconds
+        long hash = Math.abs(
+                Long.toString(dateMs)
+                        .chars()
+                        .reduce(0, (acc, charCode) -> acc * 31 + charCode)
+        );
+
+        // Ensure the number is 4 digits
+        int uniqueNumber = (int) (hash % 9000) + 1000; // Force range to 1000-9999
+        return uniqueNumber;
     }
 
 }

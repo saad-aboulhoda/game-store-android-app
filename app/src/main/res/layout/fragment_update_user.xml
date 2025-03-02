@@ -67,10 +67,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_til_first_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/first_name"
+                app:boxBackgroundColor="@color/text_field"
                 app:endIconMode="clear_text"
                 app:layout_constraintBottom_toTopOf="@+id/register_til_last_name"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -90,10 +92,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_til_last_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/last_name"
+                app:boxBackgroundColor="@color/text_field"
                 app:endIconMode="clear_text"
                 app:layout_constraintBottom_toTopOf="@+id/signup_til_email"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -114,10 +118,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/signup_til_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/email"
+                app:boxBackgroundColor="@color/text_field"
                 app:endIconMode="clear_text"
                 app:layout_constraintBottom_toTopOf="@+id/signup_til_password"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -137,10 +143,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/signup_til_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/password"
+                app:boxBackgroundColor="@color/text_field"
                 app:endIconMode="password_toggle"
                 app:layout_constraintBottom_toTopOf="@+id/register_til_confirm_password"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -159,10 +167,12 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/register_til_confirm_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:hint="@string/confirm_password"
+                app:boxBackgroundColor="@color/text_field"
                 app:endIconMode="password_toggle"
                 app:errorEnabled="true"
                 app:layout_constraintBottom_toTopOf="@+id/constraintlayout"
@@ -183,8 +193,10 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@id/constraintlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/text_field"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

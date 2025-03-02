@@ -183,7 +183,6 @@ public class GameDetailFragment extends Fragment {
                 SimilarGamesAdapter adapter = new SimilarGamesAdapter(similarGames);
                 adapter.setOnClickListener(game -> navigateToGameDetail(game));
                 similarGamesRV.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-                similarGamesRV.setHasFixedSize(true);
                 similarGamesRV.setAdapter(adapter);
             }
 

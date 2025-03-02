@@ -8,8 +8,6 @@ public class CartItem {
     private String img;
     private int amount;
 
-
-
     public CartItem() {
     }
 

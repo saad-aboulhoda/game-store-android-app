@@ -15,10 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +24,9 @@ import com.n1akai.gamesstore.R;
 import com.n1akai.gamesstore.models.CartItem;
 import com.n1akai.gamesstore.models.Order;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CheckoutFragment extends Fragment {
 
@@ -77,13 +76,19 @@ public class CheckoutFragment extends Fragment {
             v.setEnabled(false);
             indicator.setVisibility(View.VISIBLE);
             DatabaseReference myRef = mRef.push();
-            myRef.setValue(new Order(myRef.getKey(), Double.parseDouble(CheckoutFragmentArgs.fromBundle(getArguments()).getTotalPrice()), cartList, Order.PENDING, user.getUid(), user.getEmail())).addOnCompleteListener(task -> {
+            Order order = new Order(myRef.getKey(), Double.parseDouble(CheckoutFragmentArgs.fromBundle(getArguments()).getTotalPrice()), cartList, Order.PENDING, user.getUid(), user.getEmail());
+            myRef.setValue(order).addOnCompleteListener(task -> {
                 v.setEnabled(true);
                 indicator.setVisibility(View.INVISIBLE);
                 if (task.isSuccessful()) {
                     Toast.makeText(getContext(), "Ordered Successfully!", Toast.LENGTH_SHORT).show();
                     navigateToOrders();
                     FirebaseDatabase.getInstance().getReference("carts").child(user.getUid()).removeValue();
+                    order.getGames().forEach(e -> {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("amount", e.getAmount());
+                        FirebaseDatabase.getInstance().getReference("games").child(e.getId()).updateChildren(map);
+                    });
                 } else {
                     Toast.makeText(getContext(), "Failed! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                 }

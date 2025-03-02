@@ -23,6 +23,7 @@ public class Game implements Serializable {
     private String discount;
     private List<Genre> genres;
     private List<String> images;
+    private Integer sales = 0;
 
     public Game() {
 
@@ -58,6 +59,7 @@ public class Game implements Serializable {
         this.genres = genres;
         this.images = images;
     }
+
 
     public String getId() {
         return id;
@@ -97,7 +99,7 @@ public class Game implements Serializable {
 
     public String getPrice() {
         if (this.discount != null) {
-            double thePrice = Double.parseDouble(price)*(1- Double.parseDouble(discount));
+            double thePrice = Double.parseDouble(price) * (1 - Double.parseDouble(discount));
             return String.format("%.2f", thePrice);
         }
         return price;
@@ -113,5 +115,13 @@ public class Game implements Serializable {
 
     public List<String> getImages() {
         return images;
+    }
+
+    public Integer getSales() {
+        return sales;
+    }
+
+    public void setSales(Integer sales) {
+        this.sales = sales;
     }
 }

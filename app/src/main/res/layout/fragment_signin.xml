@@ -17,8 +17,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center"
+            android:orientation="vertical"
             android:padding="12dp">
 
             <ImageView
@@ -41,8 +41,8 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/create_your_acount"
                 android:textColor="@color/text_color_primary"
-                android:textSize="20sp"
                 android:textFontWeight="500"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toTopOf="@+id/textView7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -50,14 +50,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:id="@+id/login_til_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="@string/email"
-                app:errorEnabled="true"
+                app:boxBackgroundColor="@color/text_field"
                 app:endIconMode="clear_text"
+                app:errorEnabled="true"
                 app:startIconDrawable="@drawable/ic_email">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -139,7 +140,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="#fff"
+                android:backgroundTint="@color/text_field"
                 android:paddingVertical="12dp"
                 android:text="@string/login_with_google"
                 android:textAllCaps="false"

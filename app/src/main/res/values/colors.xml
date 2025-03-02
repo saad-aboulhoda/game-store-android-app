@@ -4,6 +4,7 @@
     <color name="text_color_secondary">#FFFFFFFF</color>
     <color name="main_background">#F1F1F1</color>
     <color name="toolbar_bg">#F64B4B</color>
+    <color name="text_field">#fff</color>
 
     <!-- Discount Layout -->
     <color name="discount_title_color">#FFF</color>
