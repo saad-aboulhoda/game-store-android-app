@@ -37,4 +37,4 @@ It is a modern game store, where you buy a game easily.
 
 # Feedback
 
-If you have any feedback, please reach out to me at saad.aboulhoda@gmail.com
+If you have any feedback, please reach out to me at saad@aboulhoda.me
