@@ -2,8 +2,8 @@
 
 It is a modern game store, where you buy a game easily.
 
-
 # Tools used
+
 - Java
 - Firebase
 - Glide
@@ -15,21 +15,25 @@ It is a modern game store, where you buy a game easily.
 
 ## Light Mode
 
-<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s1.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s2.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s3.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s4.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s5.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s6.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s7.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s8.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s9.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s10.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s11.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s12.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s13.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s14.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s15.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/s16.png" width="98" height="200" />
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/1.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/2.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/3.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/4.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/5.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/6.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/7.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/8.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/9.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/10.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/11.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Light%20Mode/12.webp" width="98" height="200" />
 
 ## Dark Mode
 
-<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s1.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s2.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s3.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s4.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s5.png" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/s6.png" width="98" height="200" />
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/1.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/2.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/3.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/4.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/5.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/6.webp" width="98" height="200" /> <img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dark%20Mode/7.webp" width="98" height="200" />
 
 ## Dashboard
 
-<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/d_s_1.png" />
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/1.webp" />
 
-<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/d_s_2.png" />
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/2.webp" />
 
-<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/d_s_3.png" />
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/3.webp" />
 
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/4.webp" />
 
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/5.webp" />
+
+<img src="https://github.com/N1AKAI/Games_Store_App/blob/master/screenshots/Dashboard/6.webp" />
 
 # Feedback
 
